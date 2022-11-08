@@ -5,7 +5,6 @@ import "package:wave/wave.dart";
 
 import '../controller/controller.dart';
 
-
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,7 @@ class HomeScreen extends StatelessWidget {
                       ]),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: screenHeight / 2.5),
+                      margin: EdgeInsets.only(top: screenHeight / 2.65),
                       child: Center(
                         child: Text("${value.percentage}%",
                             style: TextStyle(

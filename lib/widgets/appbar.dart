@@ -3,7 +3,6 @@ import "package:provider/provider.dart";
 
 import "../controller/controller.dart";
 
-
 class CustomAppBar extends StatelessWidget {
   var controller;
 
@@ -16,7 +15,8 @@ class CustomAppBar extends StatelessWidget {
         Expanded(
             child: InkWell(
           onTap: () {
-            controller.animateToPage(0, curve: Curves.easeOut, duration: const Duration(milliseconds: 250));
+            controller.animateToPage(0,
+                curve: Curves.easeOut, duration: const Duration(milliseconds: 250));
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -30,7 +30,8 @@ class CustomAppBar extends StatelessWidget {
         Expanded(
           child: InkWell(
             onTap: () {
-              controller.animateToPage(1, curve: Curves.easeOut, duration: const Duration(milliseconds: 250));
+              controller.animateToPage(1,
+                  curve: Curves.easeOut, duration: const Duration(milliseconds: 250));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -45,7 +46,8 @@ class CustomAppBar extends StatelessWidget {
         Expanded(
           child: InkWell(
             onTap: () {
-              controller.animateToPage(2, curve: Curves.easeOut, duration: const Duration(milliseconds: 250));
+              controller.animateToPage(2,
+                  curve: Curves.easeOut, duration: const Duration(milliseconds: 250));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -53,7 +53,8 @@ class MyApp extends StatelessWidget {
                   if (value.percentage < 100) {
                     value.increaseWater();
                   } else {
-                    controller.nextPage(curve: Curves.easeOut, duration: const Duration(milliseconds: 250));
+                    controller.nextPage(
+                        curve: Curves.easeOut, duration: const Duration(milliseconds: 250));
                   }
                 },
                 backgroundColor: value.size >= 0.7 ? Colors.blue : Colors.white,

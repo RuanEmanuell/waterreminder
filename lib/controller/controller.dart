@@ -10,7 +10,7 @@ class Controller extends ChangeNotifier {
   var button3Color = const Color.fromARGB(255, 211, 211, 211);
 
   int percentage = 0;
-  double size = 0.8;
+  double size = 0.82;
 
   changeColor() {
     switch (page) {

@@ -1,11 +1,11 @@
 import "package:flutter/material.dart";
 
-class CupWidget extends StatelessWidget {
+class CupAddWidget extends StatelessWidget {
   late String cup;
   late String size;
   var onTap;
 
-  CupWidget({required this.cup, required this.size, required this.onTap});
+  CupAddWidget({required this.cup, required this.size, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

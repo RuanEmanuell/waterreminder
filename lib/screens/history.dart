@@ -3,7 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../controller/controller.dart';
 
-import "add.dart";
+import "../widgets/cuphistory.dart";
+import "../widgets/mainbutton.dart";
 
 class HistoryScreen extends StatelessWidget {
   @override
@@ -22,16 +23,7 @@ class HistoryScreen extends StatelessWidget {
                           const Text("It looks like you still don't have drink water today...",
                               style: TextStyle(color: Color.fromARGB(255, 80, 80, 80))),
                           const SizedBox(height: 10),
-                          FloatingActionButton(
-                              heroTag: "btn2",
-                              onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return AddScreen(value: value);
-                                  },
-                                ));
-                              },
-                              child: const Icon(Icons.add, size: 30))
+                          MainButton(value: value, heroTag:"btn2")
                         ],
                       )
                     : SizedBox(
@@ -42,22 +34,9 @@ class HistoryScreen extends StatelessWidget {
                             return Container(
                                 margin: const EdgeInsets.all(20),
                                 alignment: Alignment.center,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                        margin: const EdgeInsets.only(bottom: 5, right: 5),
-                                        height: screenHeight / 20,
-                                        child:
-                                            Image.asset("assets/images/${value.history[0][index]}.png")),
-                                    Expanded(
-                                      child: Text("${value.history[1][index]}ml",
-                                          style: const TextStyle(color: Colors.grey)),
-                                    ),
-                                    const SizedBox(width: 5),
-                                    Text(value.history[2][index],
-                                        style: const TextStyle(color: Colors.grey)),
-                                  ],
+                                child: CupHistoryWidget(
+                                  index:index,
+                                  value:value
                                 ));
                           },
                         ),

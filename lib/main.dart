@@ -4,11 +4,10 @@ import "package:provider/provider.dart";
 import 'controller/controller.dart';
 
 import "widgets/appbar.dart";
-import "widgets/dialog.dart";
+import "widgets/mainbutton.dart";
 
 import "screens/home.dart";
 import "screens/history.dart";
-import "screens/add.dart";
 
 void main() {
   runApp(MultiProvider(
@@ -49,28 +48,9 @@ class MyApp extends StatelessWidget {
         }),
         floatingActionButton: Consumer<Controller>(builder: (context, value, child) {
           return AnimatedOpacity(
-            duration: const Duration(milliseconds: 250),
-            opacity: value.page == 0 ? 1 : 0,
-            child: FloatingActionButton(
-                heroTag: "btn1",
-                onPressed: () {
-                  if (value.percentage >= 100 && !value.ok) {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return WarningDialog(value: value);
-                      },
-                    );
-                  }
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return AddScreen(value: value);
-                    },
-                  ));
-                },
-                backgroundColor: value.size >= 0.7 ? Colors.blue : Colors.white,
-                child: Icon(Icons.add, size: 30, color: value.size >= 0.7 ? Colors.white : Colors.blue)),
-          );
+              duration: const Duration(milliseconds: 250),
+              opacity: value.page == 0 ? 1 : 0,
+              child: MainButton(value: value, heroTag:"btn1"));
         }));
   }
 }

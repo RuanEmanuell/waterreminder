@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import "../widgets/cups.dart";
+import '../widgets/cupadd.dart';
 import "../widgets/dialog.dart";
 
 class AddScreen extends StatelessWidget {
@@ -27,7 +27,7 @@ class AddScreen extends StatelessWidget {
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
                   itemCount: value.cups[0].length,
                   itemBuilder: (context, index) {
-                    return CupWidget(
+                    return CupAddWidget(
                         cup: value.cups[0][index],
                         size: value.cups[1][index],
                         onTap: () {

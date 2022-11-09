@@ -12,6 +12,11 @@ class Controller extends ChangeNotifier {
   int percentage = 0;
   double size = 0.82;
 
+  var cups = ["cup", "glass", "big glass", "bottle", "jar", "big bottle"];
+  var sizes = ["100ml", "250ml", "400ml", "600ml", "800ml", "1000ml"];
+
+  var history = [];
+
   changeColor() {
     switch (page) {
       case 0:
@@ -29,6 +34,10 @@ class Controller extends ChangeNotifier {
         button2Color = grey;
         button3Color = white;
     }
+    notifyListeners();
+  }
+
+  addCup() {
     notifyListeners();
   }
 

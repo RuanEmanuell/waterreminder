@@ -6,6 +6,7 @@ import 'controller/controller.dart';
 import "widgets/appbar.dart";
 import "screens/home.dart";
 import "screens/history.dart";
+import "screens/add.dart";
 
 void main() {
   runApp(MultiProvider(
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: PreferredSize(
-            preferredSize: Size.fromHeight(screenHeight / 10.5),
+            preferredSize: Size.fromHeight(screenHeight / 12),
             child: CustomAppBar(controller: controller)),
         body: Consumer<Controller>(builder: (context, value, child) {
           return PageView(
@@ -49,12 +50,14 @@ class MyApp extends StatelessWidget {
             duration: const Duration(milliseconds: 250),
             opacity: value.page == 0 ? 1 : 0,
             child: FloatingActionButton(
+                heroTag: "btn1",
                 onPressed: () {
                   if (value.percentage < 100) {
-                    value.increaseWater();
-                  } else {
-                    controller.nextPage(
-                        curve: Curves.easeOut, duration: const Duration(milliseconds: 250));
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return AddScreen(value: value);
+                      },
+                    ));
                   }
                 },
                 backgroundColor: value.size >= 0.7 ? Colors.blue : Colors.white,

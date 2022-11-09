@@ -23,7 +23,7 @@ class HistoryScreen extends StatelessWidget {
                           const Text("It looks like you still don't have drink water today...",
                               style: TextStyle(color: Color.fromARGB(255, 80, 80, 80))),
                           const SizedBox(height: 10),
-                          MainButton(value: value, heroTag:"btn2")
+                          MainButton(value: value, heroTag: "btn2")
                         ],
                       )
                     : SizedBox(
@@ -34,10 +34,7 @@ class HistoryScreen extends StatelessWidget {
                             return Container(
                                 margin: const EdgeInsets.all(20),
                                 alignment: Alignment.center,
-                                child: CupHistoryWidget(
-                                  index:index,
-                                  value:value
-                                ));
+                                child: CupHistoryWidget(index: index, value: value));
                           },
                         ),
                       );

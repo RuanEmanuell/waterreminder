@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           return AnimatedOpacity(
               duration: const Duration(milliseconds: 250),
               opacity: value.page == 0 ? 1 : 0,
-              child: MainButton(value: value, heroTag:"btn1"));
+              child: MainButton(value: value, heroTag: "btn1"));
         }));
   }
 }

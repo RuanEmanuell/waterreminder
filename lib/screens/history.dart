@@ -49,9 +49,9 @@ class HistoryScreen extends StatelessWidget {
                                         margin: const EdgeInsets.only(bottom: 5, right: 5),
                                         height: screenHeight / 20,
                                         child:
-                                            Image.asset("assets/images/${value.history[1][index]}.png")),
+                                            Image.asset("assets/images/${value.history[0][index]}.png")),
                                     Expanded(
-                                      child: Text("${value.history[0][index]}ml",
+                                      child: Text("${value.history[1][index]}ml",
                                           style: const TextStyle(color: Colors.grey)),
                                     ),
                                     const SizedBox(width: 5),

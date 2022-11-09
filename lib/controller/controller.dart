@@ -1,6 +1,10 @@
 import "package:flutter/material.dart";
 
 class Controller extends ChangeNotifier {
+  var index;
+  double text = 0;
+  bool isCustom = false;
+
   var white = Colors.white;
   var grey = const Color.fromARGB(255, 211, 211, 211);
   var page = 0;
@@ -9,7 +13,7 @@ class Controller extends ChangeNotifier {
   var button2Color = const Color.fromARGB(255, 211, 211, 211);
   var button3Color = const Color.fromARGB(255, 211, 211, 211);
 
-  late int cupSize;
+  late double cupSize;
   double percentage = 0;
   double size = 0.82;
   bool ok = false;
@@ -41,7 +45,30 @@ class Controller extends ChangeNotifier {
     notifyListeners();
   }
 
+  takeHour() {
+    var hour = DateTime.now().hour;
+    var minute = DateTime.now().minute;
+    if (minute < 10) {
+      history[2].add("$hour:0$minute");
+    } else if (hour < 10) {
+      history[2].add("0$hour:$minute");
+    } else {
+      history[2].add("$hour:$minute");
+    }
+  }
+
   addCup() {
+    if (isCustom) {
+      history[0].add("custom");
+      history[1].add(text);
+      cupSize = text / 20;
+    } else {
+      cupSize = double.parse(cups[1][index]);
+      history[0].add(cups[0][index]);
+      history[1].add(cups[1][index]);
+    }
+    takeHour();
+    increaseWater();
     notifyListeners();
   }
 

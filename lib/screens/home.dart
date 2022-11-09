@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                       child: Center(
                         child: Text("${value.percentage}%",
                             style: TextStyle(
-                                fontSize: 40, color: value.size >= 0.4 ? Colors.blue : Colors.white)),
+                                fontSize: 40, color: value.size >= 0.34 ? Colors.blue : Colors.white)),
                       ),
                     )
                   ])

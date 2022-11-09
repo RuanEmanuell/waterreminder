@@ -16,7 +16,7 @@ class HistoryScreen extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             child: Consumer<Controller>(
               builder: (context, value, child) {
-                return value.history.isEmpty
+                return value.history[0].isEmpty
                     ? Column(
                         children: [
                           const Text("It looks like you still don't have drink water today...",
@@ -35,11 +35,30 @@ class HistoryScreen extends StatelessWidget {
                         ],
                       )
                     : SizedBox(
-                        height: screenHeight,
+                        height: screenHeight / 1.15,
                         child: ListView.builder(
-                          itemCount: value.history.length,
+                          itemCount: value.history[0].length,
                           itemBuilder: (context, index) {
-                            return Text(value.history[index]);
+                            return Container(
+                                margin: const EdgeInsets.all(20),
+                                alignment: Alignment.center,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                        margin: const EdgeInsets.only(bottom: 5, right: 5),
+                                        height: screenHeight / 20,
+                                        child:
+                                            Image.asset("assets/images/${value.history[1][index]}.png")),
+                                    Expanded(
+                                      child: Text("${value.history[0][index]}ml",
+                                          style: const TextStyle(color: Colors.grey)),
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(value.history[2][index],
+                                        style: const TextStyle(color: Colors.grey)),
+                                  ],
+                                ));
                           },
                         ),
                       );

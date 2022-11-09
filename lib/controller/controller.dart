@@ -9,13 +9,17 @@ class Controller extends ChangeNotifier {
   var button2Color = const Color.fromARGB(255, 211, 211, 211);
   var button3Color = const Color.fromARGB(255, 211, 211, 211);
 
-  int percentage = 0;
+  late int cupSize;
+  double percentage = 0;
   double size = 0.82;
+  bool ok = false;
 
-  var cups = ["cup", "glass", "big glass", "bottle", "jar", "big bottle"];
-  var sizes = ["100ml", "250ml", "400ml", "600ml", "800ml", "1000ml"];
+  var cups = [
+    ["cup", "glass", "big glass", "bottle", "jar", "big bottle"],
+    ["100", "250", "400", "600", "800", "1000"]
+  ];
 
-  var history = [];
+  var history = [[], [], []];
 
   changeColor() {
     switch (page) {
@@ -42,8 +46,8 @@ class Controller extends ChangeNotifier {
   }
 
   increaseWater() {
-    percentage = percentage + 10;
-    size = size - 0.1;
+    percentage = percentage + cupSize / 20;
+    percentage <= 100 ? size = size - cupSize / 2000 : size = -0.2;
     notifyListeners();
   }
 }

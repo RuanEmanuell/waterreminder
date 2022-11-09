@@ -52,13 +52,29 @@ class MyApp extends StatelessWidget {
             child: FloatingActionButton(
                 heroTag: "btn1",
                 onPressed: () {
-                  if (value.percentage < 100) {
-                    Navigator.push(context, MaterialPageRoute(
+                  if (value.percentage >= 100 && !value.ok) {
+                    showDialog(
+                      context: context,
                       builder: (context) {
-                        return AddScreen(value: value);
+                        return AlertDialog(
+                            content: const Text(
+                                "You've already hit the official goal of 2 liters of water per day from the World Health Organization, but we will continue to monitor! Let's drink water!"),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    value.ok = true;
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Ok"))
+                            ]);
                       },
-                    ));
+                    );
                   }
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return AddScreen(value: value);
+                    },
+                  ));
                 },
                 backgroundColor: value.size >= 0.7 ? Colors.blue : Colors.white,
                 child: Icon(Icons.add, size: 30, color: value.size >= 0.7 ? Colors.white : Colors.blue)),

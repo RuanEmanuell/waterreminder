@@ -16,14 +16,17 @@ class AddScreen extends StatelessWidget {
 
     var textController = TextEditingController();
     return Scaffold(
-        appBar: AppBar(centerTitle: true, title: const Text("Select a cup")),
+        appBar: AppBar(
+          backgroundColor:value.darkMode ? Colors.black:Colors.blue,
+          centerTitle: true, title: const Text("Select a cup")),
         body: SingleChildScrollView(
-          child: SizedBox(
+          child: Container(
+            color:value.darkMode ? Colors.black:Colors.white,
             width: screenWidth,
             child: Column(children: [
               SizedBox(height: screenHeight / 20),
               SizedBox(
-                height: screenHeight / 2.15,
+                height: screenHeight / 2,
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
                   itemCount: value.cups[0].length,
@@ -31,6 +34,7 @@ class AddScreen extends StatelessWidget {
                     return CupAddWidget(
                         cup: value.cups[0][index],
                         size: value.cups[1][index],
+                        value:value,
                         onTap: () {
                           value.index = index;
                           value.isCustom = false;
@@ -49,12 +53,19 @@ class AddScreen extends StatelessWidget {
                     },
                   );
                 },
-                child: Column(
-                  children: [
-                    Image.asset("assets/images/custom.png", scale: 2),
-                    Container(height: 10),
-                    const Text("Custom")
-                  ],
+                child: Container(
+                  height:screenHeight/2,
+                  child: Column(
+                    children: [
+                      Image.asset("assets/images/custom.png", scale: 2),
+                      Container(height: 10),
+                      Text("Custom", style:TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize:screenWidth/20,
+                        color:value.darkMode ? Colors.white:Colors.black,
+                      ))
+                    ],
+                  ),
                 ),
               )
             ]),

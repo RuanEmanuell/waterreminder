@@ -16,26 +16,29 @@ class HistoryScreen extends StatelessWidget {
         body: Center(
             child: SingleChildScrollView(
                 physics: const NeverScrollableScrollPhysics(),
-                child: value.list0.length < 1
-                    ? Column(
-                        children: [
-                          const Text("It looks like you still don't have drink water today...",
-                              style: TextStyle(color: Color.fromARGB(255, 80, 80, 80))),
-                          const SizedBox(height: 10),
-                          MainButton(value: value, heroTag: "btn2")
-                        ],
-                      )
-                    : SizedBox(
-                        height: screenHeight / 1.15,
-                        child: ListView.builder(
-                          itemCount: value.list0.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                                margin: const EdgeInsets.all(20),
-                                alignment: Alignment.center,
-                                child: CupHistoryWidget(index: index, value: value));
-                          },
+                child: Container(
+                  color: value.darkMode ? Colors.black:Colors.white,
+                  child: value.list0.length == 0
+                      ? Column(
+                          children: [
+                            const Text("It looks like you still don't have drink water today...",
+                                style: TextStyle(color: Color.fromARGB(255, 80, 80, 80))),
+                            const SizedBox(height: 10),
+                            MainButton(value: value, heroTag: "btn2")
+                          ],
+                        )
+                      : SizedBox(
+                          height: screenHeight / 1.12,
+                          child: ListView.builder(
+                            itemCount: value.list0.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                  margin: const EdgeInsets.all(20),
+                                  alignment: Alignment.center,
+                                  child: CupHistoryWidget(index: index, value: value));
+                            },
+                          ),
                         ),
-                      ))));
+                ))));
   }
 }

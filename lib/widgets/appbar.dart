@@ -11,7 +11,9 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<Controller>(builder: (context, value, child) {
-      return AppBar(actions: [
+      return AppBar(
+        backgroundColor:value.darkMode ? Color.fromARGB(255, 29, 29, 29):Colors.blue,
+        actions: [
         Expanded(
             child: InkWell(
           onTap: () {

@@ -14,33 +14,37 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
         body: SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(),
-            child: Column(
-              children: [
-                Stack(children: [
-                  WaveWidget(
-                    size: Size(screenWidth, screenHeight),
-                    config: CustomConfig(gradients: [
-                      [const Color.fromARGB(255, 10, 110, 192), Colors.lightBlue],
-                      [Colors.blue, Colors.lightBlue],
-                    ], heightPercentages: [
-                      value.size,
-                      value.size
-                    ], durations: [
-                      5000,
-                      6000
-                    ]),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: screenHeight / 2.65),
-                    child: Center(
-                      child: Text("${value.percentage.toStringAsFixed(0)}%",
-                          style: TextStyle(
-                              fontSize: screenWidth / 10,
-                              color: value.size >= 0.34 ? Colors.blue : Colors.white)),
+            child: Container(
+              color:value.darkMode ? Colors.black:Colors.white,
+              child: Column(
+                children: [
+                  Stack(children: [
+                    WaveWidget(
+                      size: Size(screenWidth, screenHeight),
+                      config: CustomConfig(gradients: [
+                        [const Color.fromARGB(255, 10, 110, 192), Colors.lightBlue],
+                        [Colors.blue, Colors.lightBlue],
+                      ], heightPercentages: [
+                        value.size,
+                        value.size
+                      ], durations: [
+                        5000,
+                        6000
+                      ]),
                     ),
-                  )
-                ])
-              ],
+                    Container(
+                      margin: EdgeInsets.only(top: screenHeight / 2.65),
+                      child: Center(
+                        child: Text("${value.percentage.toStringAsFixed(0)}%",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: screenWidth / 10,
+                                color: value.size >= 0.34 ? Colors.blue : value.darkMode ? Colors.black:Colors.white)),
+                      ),
+                    )
+                  ])
+                ],
+              ),
             )));
   }
 }

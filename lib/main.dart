@@ -51,25 +51,28 @@ class _MyAppState extends State<MyApp> {
             preferredSize: Size.fromHeight(screenHeight / 12),
             child: CustomAppBar(controller: controller)),
         body: Consumer<Controller>(builder: (context, value, child) {
-          return value.loading
-              ? const Center(child: CircularProgressIndicator())
-              : PageView(
-                  controller: controller,
-                  onPageChanged: (page) {
-                    switch (page) {
-                      case 0:
-                        value.page = 0;
-                        break;
-                      case 1:
-                        value.page = 1;
-                        break;
-                      case 2:
-                        value.page = 2;
-                        break;
-                    }
-                    value.changeColor();
-                  },
-                  children: [HomeScreen(), HistoryScreen()]);
+          return Container(
+            color:value.white,
+            child: value.loading
+                ? const Center(child: CircularProgressIndicator())
+                : PageView(
+                    controller: controller,
+                    onPageChanged: (page) {
+                      switch (page) {
+                        case 0:
+                          value.page = 0;
+                          break;
+                        case 1:
+                          value.page = 1;
+                          break;
+                        case 2:
+                          value.page = 2;
+                          break;
+                      }
+                      value.changeAppBarColor();
+                    },
+                    children: [HomeScreen(), HistoryScreen()]),
+          );
         }),
         floatingActionButton: Consumer<Controller>(builder: (context, value, child) {
           return AnimatedOpacity(

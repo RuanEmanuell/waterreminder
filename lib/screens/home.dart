@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
         body: SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(),
             child: Container(
-              color: value.darkMode ? Colors.black : Colors.white,
+              color: value.darkMode ? const Color.fromARGB(255, 29, 29, 29) : Colors.white,
               child: Column(
                 children: [
                   Stack(children: [
@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                                 color: value.size >= 0.34
                                     ? Colors.blue
                                     : value.darkMode
-                                        ? Colors.black
+                                        ? const Color.fromARGB(255, 29, 29, 29)
                                         : Colors.white)),
                       ),
                     ),

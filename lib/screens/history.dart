@@ -17,12 +17,15 @@ class HistoryScreen extends StatelessWidget {
             child: SingleChildScrollView(
                 physics: const NeverScrollableScrollPhysics(),
                 child: Container(
-                  color: value.darkMode ? Colors.black : Colors.white,
+                  height: screenHeight,
+                  width: screenWidth,
+                  color: value.darkMode ? const Color.fromARGB(255, 29, 29, 29) : Colors.white,
                   child: value.list0.length == 0
                       ? Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text("It looks like you still don't have drink water today...",
-                                style: TextStyle(color: Color.fromARGB(255, 80, 80, 80))),
+                                style: TextStyle(color: Color.fromARGB(255, 102, 102, 102))),
                             const SizedBox(height: 10),
                             MainButton(value: value, heroTag: "btn2")
                           ],

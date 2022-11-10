@@ -14,12 +14,11 @@ class Controller extends ChangeNotifier {
   var white = Colors.white;
   bool darkMode = false;
   var page = 0;
-  var grey = const Color.fromARGB(255, 116, 116, 116);
-  var darkGrey = const Color.fromARGB(255, 116, 116, 116);
+  var grey = const Color.fromARGB(255, 102, 102, 102);
 
   var button1Color = Colors.white;
-  var button2Color = const Color.fromARGB(255, 211, 211, 211);
-  var button3Color = const Color.fromARGB(255, 211, 211, 211);
+  var button2Color = const Color.fromARGB(255, 102, 102, 102);
+  var button3Color = const Color.fromARGB(255, 102, 102, 102);
 
   //Info variables
   String text = "";
@@ -38,6 +37,7 @@ class Controller extends ChangeNotifier {
     ["100", "250", "400", "600", "800", "1000"]
   ];
 
+  //Dark mode controller
   changeDarkMode() {
     darkMode = !darkMode;
     notifyListeners();
@@ -48,17 +48,17 @@ class Controller extends ChangeNotifier {
     switch (page) {
       case 0:
         button1Color = white;
-        button2Color = darkMode ? darkGrey : grey;
-        button3Color = darkMode ? darkGrey : grey;
+        button2Color = grey;
+        button3Color = grey;
         break;
       case 1:
-        button1Color = darkMode ? darkGrey : grey;
+        button1Color = grey;
         button2Color = white;
-        button3Color = darkMode ? darkGrey : grey;
+        button3Color = grey;
         break;
       case 2:
-        button1Color = darkMode ? darkGrey : grey;
-        button2Color = darkMode ? darkGrey : grey;
+        button1Color = grey;
+        button2Color = grey;
         button3Color = white;
         break;
     }
@@ -115,7 +115,7 @@ class Controller extends ChangeNotifier {
       percentage = percentage + i / 20;
     }
 
-    percentage <= 100 ? size = size - (percentage / 110) : size = -0.2;
+    percentage <= 100 ? size = size - (percentage / 100) : size = -0.2;
   }
 
   //These are the Hive functions, this one opens the data box

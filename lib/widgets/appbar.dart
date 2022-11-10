@@ -12,7 +12,7 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Controller>(builder: (context, value, child) {
       return AppBar(
-          backgroundColor: value.darkMode ? const Color.fromARGB(255, 29, 29, 29) : Colors.blue,
+          backgroundColor: value.darkMode ? const Color.fromARGB(255, 17, 17, 17) : Colors.blue,
           actions: [
             Expanded(
                 child: InkWell(

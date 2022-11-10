@@ -12,8 +12,7 @@ import "screens/history.dart";
 void main() {
   runApp(MultiProvider(
       providers: [ChangeNotifierProvider(create: (context) => Controller())],
-      child:
-          MaterialApp(home: ChangeNotifierProvider(create: (context) => Controller(), child: MyApp()))));
+      child: MaterialApp(home: MyApp())));
 }
 
 class MyApp extends StatelessWidget {
@@ -22,7 +21,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: PreferredSize(
             preferredSize: Size.fromHeight(screenHeight / 12),

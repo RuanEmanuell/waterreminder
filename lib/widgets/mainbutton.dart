@@ -24,7 +24,7 @@ class MainButton extends StatelessWidget {
           }
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              return AddScreen(value: value);
+              return AddScreen();
             },
           ));
         },

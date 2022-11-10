@@ -11,13 +11,12 @@ class HistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
+    var value = Provider.of<Controller>(context, listen: false);
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            child: Consumer<Controller>(
-              builder: (context, value, child) {
-                return value.history[0].isEmpty
+        body: Center(
+            child: SingleChildScrollView(
+                physics: const NeverScrollableScrollPhysics(),
+                child: value.history[0].isEmpty
                     ? Column(
                         children: [
                           const Text("It looks like you still don't have drink water today...",
@@ -37,10 +36,6 @@ class HistoryScreen extends StatelessWidget {
                                 child: CupHistoryWidget(index: index, value: value));
                           },
                         ),
-                      );
-              },
-            )),
-      ),
-    );
+                      ))));
   }
 }

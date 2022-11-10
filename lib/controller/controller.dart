@@ -60,7 +60,6 @@ class Controller extends ChangeNotifier {
   increaseWater() {
     percentage = percentage + cupSize / 20;
     percentage <= 100 ? size = size - cupSize / 2000 : size = -0.2;
-    notifyListeners();
   }
 
   addCup() {

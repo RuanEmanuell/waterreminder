@@ -17,7 +17,7 @@ class HistoryScreen extends StatelessWidget {
             child: SingleChildScrollView(
                 physics: const NeverScrollableScrollPhysics(),
                 child: Container(
-                  color: value.darkMode ? Colors.black:Colors.white,
+                  color: value.darkMode ? Colors.black : Colors.white,
                   child: value.list0.length == 0
                       ? Column(
                           children: [

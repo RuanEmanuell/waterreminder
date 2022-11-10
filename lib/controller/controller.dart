@@ -11,11 +11,11 @@ class Controller extends ChangeNotifier {
   bool loading = true;
 
   //Visual variables
-  var white=Colors.white;
-  bool darkMode=false;
+  var white = Colors.white;
+  bool darkMode = false;
   var page = 0;
-  var grey = Color.fromARGB(255, 116, 116, 116);
-  var darkGrey= Color.fromARGB(255, 116, 116, 116);
+  var grey = const Color.fromARGB(255, 116, 116, 116);
+  var darkGrey = const Color.fromARGB(255, 116, 116, 116);
 
   var button1Color = Colors.white;
   var button2Color = const Color.fromARGB(255, 211, 211, 211);
@@ -38,29 +38,32 @@ class Controller extends ChangeNotifier {
     ["100", "250", "400", "600", "800", "1000"]
   ];
 
+  changeDarkMode() {
+    darkMode = !darkMode;
+    notifyListeners();
+  }
+
   //AppBar color function
   changeAppBarColor() {
     switch (page) {
       case 0:
         button1Color = white;
-        button2Color = darkMode ? darkGrey:grey;
-        button3Color = darkMode ? darkGrey:grey;
+        button2Color = darkMode ? darkGrey : grey;
+        button3Color = darkMode ? darkGrey : grey;
         break;
       case 1:
-        button1Color = darkMode ? darkGrey:grey;
+        button1Color = darkMode ? darkGrey : grey;
         button2Color = white;
-        button3Color = darkMode ? darkGrey:grey;
+        button3Color = darkMode ? darkGrey : grey;
         break;
       case 2:
-        button1Color = darkMode ? darkGrey:grey;
-        button2Color = darkMode ? darkGrey:grey;
+        button1Color = darkMode ? darkGrey : grey;
+        button2Color = darkMode ? darkGrey : grey;
         button3Color = white;
         break;
     }
     notifyListeners();
   }
-
-
 
   //////////////Below there are the add cup functions///////////////////////////
 

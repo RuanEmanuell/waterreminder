@@ -17,11 +17,12 @@ class AddScreen extends StatelessWidget {
     var textController = TextEditingController();
     return Scaffold(
         appBar: AppBar(
-          backgroundColor:value.darkMode ? Colors.black:Colors.blue,
-          centerTitle: true, title: const Text("Select a cup")),
+            backgroundColor: value.darkMode ? Colors.black : Colors.blue,
+            centerTitle: true,
+            title: const Text("Select a cup")),
         body: SingleChildScrollView(
           child: Container(
-            color:value.darkMode ? Colors.black:Colors.white,
+            color: value.darkMode ? Colors.black : Colors.white,
             width: screenWidth,
             child: Column(children: [
               SizedBox(height: screenHeight / 20),
@@ -34,7 +35,7 @@ class AddScreen extends StatelessWidget {
                     return CupAddWidget(
                         cup: value.cups[0][index],
                         size: value.cups[1][index],
-                        value:value,
+                        value: value,
                         onTap: () {
                           value.index = index;
                           value.isCustom = false;
@@ -53,17 +54,18 @@ class AddScreen extends StatelessWidget {
                     },
                   );
                 },
-                child: Container(
-                  height:screenHeight/2,
+                child: SizedBox(
+                  height: screenHeight / 2,
                   child: Column(
                     children: [
                       Image.asset("assets/images/custom.png", scale: 2),
                       Container(height: 10),
-                      Text("Custom", style:TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize:screenWidth/20,
-                        color:value.darkMode ? Colors.white:Colors.black,
-                      ))
+                      Text("Custom",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: screenWidth / 20,
+                            color: value.darkMode ? Colors.white : Colors.black,
+                          ))
                     ],
                   ),
                 ),

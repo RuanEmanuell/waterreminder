@@ -6,7 +6,7 @@ class CupAddWidget extends StatelessWidget {
   var onTap;
   var value;
 
-  CupAddWidget({required this.cup, required this.size, required this.onTap,required this.value});
+  CupAddWidget({required this.cup, required this.size, required this.onTap, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +17,11 @@ class CupAddWidget extends StatelessWidget {
         child: Column(children: [
           Expanded(child: Image.asset("assets/images/$cup.png")),
           Container(height: 10),
-          Text("${size}ml", style:TextStyle(
-            fontWeight: FontWeight.bold,
-            color:value.darkMode ? Colors.white:Colors.black,
-          )),
+          Text("${size}ml",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: value.darkMode ? Colors.white : Colors.black,
+              )),
         ]),
       ),
     );

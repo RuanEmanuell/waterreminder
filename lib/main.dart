@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
             child: CustomAppBar(controller: controller)),
         body: Consumer<Controller>(builder: (context, value, child) {
           return Container(
-            color:value.white,
+            color: value.white,
             child: value.loading
                 ? const Center(child: CircularProgressIndicator())
                 : PageView(

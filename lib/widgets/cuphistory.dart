@@ -14,12 +14,12 @@ class CupHistoryWidget extends StatelessWidget {
         Container(
             margin: const EdgeInsets.only(bottom: 5, right: 5),
             height: screenHeight / 20,
-            child: Image.asset("assets/images/${value.history[0][index]}.png")),
+            child: Image.asset("assets/images/${value.list0[index]}.png")),
         Expanded(
-          child: Text("${value.history[1][index]}ml", style: const TextStyle(color: Colors.grey)),
+          child: Text("${value.list1[index]}ml", style: const TextStyle(color: Colors.grey)),
         ),
         const SizedBox(width: 5),
-        Text(value.history[2][index], style: const TextStyle(color: Colors.grey)),
+        Text(value.list2[index], style: const TextStyle(color: Colors.grey)),
       ],
     );
   }

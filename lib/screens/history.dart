@@ -16,7 +16,7 @@ class HistoryScreen extends StatelessWidget {
         body: Center(
             child: SingleChildScrollView(
                 physics: const NeverScrollableScrollPhysics(),
-                child: value.history[0].isEmpty
+                child: value.list0.length < 1
                     ? Column(
                         children: [
                           const Text("It looks like you still don't have drink water today...",
@@ -28,7 +28,7 @@ class HistoryScreen extends StatelessWidget {
                     : SizedBox(
                         height: screenHeight / 1.15,
                         child: ListView.builder(
-                          itemCount: value.history[0].length,
+                          itemCount: value.list0.length,
                           itemBuilder: (context, index) {
                             return Container(
                                 margin: const EdgeInsets.all(20),

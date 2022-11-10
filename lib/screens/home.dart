@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(top: screenHeight / 2.65),
                     child: Center(
-                      child: Text("${value.percentage.toStringAsFixed(1)}%",
+                      child: Text("${value.percentage.toStringAsFixed(0)}%",
                           style: TextStyle(
                               fontSize: screenWidth / 10,
                               color: value.size >= 0.34 ? Colors.blue : Colors.white)),

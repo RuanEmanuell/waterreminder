@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:flutter/services.dart';
 
 class WarningDialog extends StatelessWidget {
   var value;
@@ -30,12 +31,16 @@ class CustomDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(content: const Text("Add other size (ml)"), actions: [
-      TextField(maxLength: 4, controller: textController, keyboardType: TextInputType.number),
+      TextField(
+          maxLength: 4,
+          controller: textController,
+          keyboardType: TextInputType.number,
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly]),
       TextButton(
           onPressed: () {
             if (textController.text.isNotEmpty) {
               value.isCustom = true;
-              value.text = double.parse(textController.text);
+              value.text = textController.text;
               value.addCup();
               Navigator.pop(context);
               Navigator.pop(context);

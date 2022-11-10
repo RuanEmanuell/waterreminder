@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import "package:provider/provider.dart";
+import "package:hive_flutter/hive_flutter.dart";
 
 import 'controller/controller.dart';
 
@@ -9,14 +10,38 @@ import "widgets/mainbutton.dart";
 import "screens/home.dart";
 import "screens/history.dart";
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+
   runApp(MultiProvider(
       providers: [ChangeNotifierProvider(create: (context) => Controller())],
       child: MaterialApp(home: MyApp())));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   var controller = PageController(initialPage: 0);
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<Controller>(context, listen: false).openBox();
+
+    Future.delayed(const Duration(seconds: 1), () {
+      if (Hive.box("box0").get("list0") == null) {
+        Provider.of<Controller>(context, listen: false).createData();
+      } else {
+        Provider.of<Controller>(context, listen: false).loadData();
+        Provider.of<Controller>(context, listen: false).defaultPercentageSize();
+      }
+
+      Provider.of<Controller>(context, listen: false).loading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,23 +51,25 @@ class MyApp extends StatelessWidget {
             preferredSize: Size.fromHeight(screenHeight / 12),
             child: CustomAppBar(controller: controller)),
         body: Consumer<Controller>(builder: (context, value, child) {
-          return PageView(
-              controller: controller,
-              onPageChanged: (page) {
-                switch (page) {
-                  case 0:
-                    value.page = 0;
-                    break;
-                  case 1:
-                    value.page = 1;
-                    break;
-                  case 2:
-                    value.page = 2;
-                    break;
-                }
-                value.changeColor();
-              },
-              children: [HomeScreen(), HistoryScreen()]);
+          return value.loading
+              ? const Center(child: CircularProgressIndicator())
+              : PageView(
+                  controller: controller,
+                  onPageChanged: (page) {
+                    switch (page) {
+                      case 0:
+                        value.page = 0;
+                        break;
+                      case 1:
+                        value.page = 1;
+                        break;
+                      case 2:
+                        value.page = 2;
+                        break;
+                    }
+                    value.changeColor();
+                  },
+                  children: [HomeScreen(), HistoryScreen()]);
         }),
         floatingActionButton: Consumer<Controller>(builder: (context, value, child) {
           return AnimatedOpacity(

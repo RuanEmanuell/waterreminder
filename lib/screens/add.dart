@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 
 import "../controller/controller.dart";
 
+import "../models/languages.dart";
+
 import '../widgets/cupadd.dart';
 import "../widgets/dialog.dart";
 
@@ -19,7 +21,7 @@ class AddScreen extends StatelessWidget {
         appBar: AppBar(
             backgroundColor: value.darkMode ? Colors.black : Colors.blue,
             centerTitle: true,
-            title: const Text("Select a cup")),
+            title: Text(value.english ? english[4] : portuguese[4])),
         body: SingleChildScrollView(
           child: Container(
             color: value.darkMode ? Colors.black : Colors.white,
@@ -60,7 +62,7 @@ class AddScreen extends StatelessWidget {
                     children: [
                       Image.asset("assets/images/custom.png", scale: 2),
                       Container(height: 10),
-                      Text("Custom",
+                      Text(value.english ? english[5] : portuguese[5],
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: screenWidth / 20,

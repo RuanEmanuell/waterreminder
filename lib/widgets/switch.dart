@@ -21,23 +21,24 @@ class DarkModeSwitch extends StatelessWidget {
   }
 }
 
-
 class LanguageSwitch extends StatelessWidget {
-  var value=false;
+  var value;
+  var provider;
+
+  LanguageSwitch({required this.value, required this.provider});
 
   @override
   Widget build(BuildContext context) {
     return FlutterSwitch(
         inactiveColor: Colors.green,
-        activeColor: Colors.blue.shade700,
+        activeColor: Colors.blue.shade800,
         inactiveToggleColor: Colors.yellow,
         activeToggleColor: Colors.red,
         inactiveIcon: Image.asset("assets/images/brasil.png"),
         activeIcon: Image.asset("assets/images/usa.png"),
-        value: value,
+        value: value.english,
         onToggle: (value) {
-          value=!value;
+          provider.changeLanguage();
         });
   }
 }
-

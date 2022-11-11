@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'dart:io';
+
 class Controller extends ChangeNotifier {
   //Args for the screens
   var index;
@@ -13,12 +15,15 @@ class Controller extends ChangeNotifier {
   //Visual variables
   var white = Colors.white;
   bool darkMode = false;
+  bool english = true;
   var page = 0;
   var grey = const Color.fromARGB(255, 102, 102, 102);
 
   var button1Color = Colors.white;
   var button2Color = const Color.fromARGB(255, 102, 102, 102);
   var button3Color = const Color.fromARGB(255, 102, 102, 102);
+
+  final String defaultLocale = Platform.localeName;
 
   //Info variables
   String text = "";
@@ -40,10 +45,20 @@ class Controller extends ChangeNotifier {
   //Dark mode controller
   changeDarkMode() {
     darkMode = !darkMode;
-    if (darkMode == true) {
+    if (darkMode) {
       Hive.box("darkmodebox").put("darkmode", darkMode);
     } else {
       Hive.box("darkmodebox").clear();
+    }
+    notifyListeners();
+  }
+
+  changeLanguage() {
+    english = !english;
+    if (!english) {
+      Hive.box("languagebox").put("languagemode", english);
+    } else {
+      Hive.box("languagebox").clear();
     }
     notifyListeners();
   }
@@ -129,6 +144,7 @@ class Controller extends ChangeNotifier {
     await Hive.openBox("box1");
     await Hive.openBox("box2");
     await Hive.openBox("darkmodebox");
+    await Hive.openBox("languagebox");
   }
 
   //This create data if it's your first time opening the app
@@ -136,6 +152,9 @@ class Controller extends ChangeNotifier {
     list0 = [];
     list1 = [];
     list2 = [];
+    if (defaultLocale == "pt_BR" || defaultLocale == "PT_PT") {
+      english = false;
+    }
     notifyListeners();
   }
 
@@ -145,8 +164,10 @@ class Controller extends ChangeNotifier {
     list1 = Hive.box("box1").get("list1");
     list2 = Hive.box("box2").get("list2");
     Hive.box("darkmodebox").get("darkmode");
+    Hive.box("languagebox").get("languagemode");
 
     Hive.box("darkmodebox").isNotEmpty ? darkMode = true : false;
+    Hive.box("languagebox").isNotEmpty ? english = false : true;
 
     notifyListeners();
   }

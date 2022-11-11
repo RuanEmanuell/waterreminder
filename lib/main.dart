@@ -30,17 +30,24 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    Provider.of<Controller>(context, listen: false).openBox();
+    
+    var provider=Provider.of<Controller>(context, listen: false);
 
-    Future.delayed(const Duration(seconds: 1), () {
+    
+
+    provider.openBox();
+
+    Future.delayed(const Duration(seconds: 2), () {
       if (Hive.box("box0").get("list0") == null) {
-        Provider.of<Controller>(context, listen: false).createData();
+        provider.createData();
+        Hive.box("languagebox").get("languagemode") != null? provider.english = false:true; 
+        Hive.box("darkmodebox").get("darkmode") != null ? provider.darkMode = true:false;
       } else {
-        Provider.of<Controller>(context, listen: false).loadData();
-        Provider.of<Controller>(context, listen: false).defaultPercentageSize();
+        provider.loadData();
+        provider.defaultPercentageSize();
       }
 
-      Provider.of<Controller>(context, listen: false).loading = false;
+      provider.loading = false;
     });
   }
 

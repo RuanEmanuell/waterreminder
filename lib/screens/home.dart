@@ -1,4 +1,3 @@
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wave/config.dart';

@@ -3,6 +3,8 @@ import "package:provider/provider.dart";
 
 import "../controller/controller.dart";
 
+import "../models/languages.dart";
+
 class CustomAppBar extends StatelessWidget {
   var controller;
 
@@ -25,7 +27,8 @@ class CustomAppBar extends StatelessWidget {
                 children: [
                   Icon(Icons.water_drop, color: value.button1Color),
                   Container(width: 10),
-                  Text("Home", style: TextStyle(color: value.button1Color))
+                  Text(value.english ? english[0] : portuguese[0],
+                      style: TextStyle(color: value.button1Color))
                 ],
               ),
             )),
@@ -40,7 +43,8 @@ class CustomAppBar extends StatelessWidget {
                   children: [
                     Icon(Icons.history, color: value.button2Color),
                     Container(width: 10),
-                    Text("History", style: TextStyle(color: value.button2Color))
+                    Text(value.english ? english[1] : portuguese[1],
+                        style: TextStyle(color: value.button2Color))
                   ],
                 ),
               ),
@@ -56,7 +60,8 @@ class CustomAppBar extends StatelessWidget {
                   children: [
                     Icon(Icons.settings, color: value.button3Color),
                     Container(width: 10),
-                    Text("Settings", style: TextStyle(color: value.button3Color))
+                    Text(value.english ? english[2] : portuguese[2],
+                        style: TextStyle(color: value.button3Color))
                   ],
                 ),
               ),

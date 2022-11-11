@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import "package:provider/provider.dart";
 import "package:hive_flutter/hive_flutter.dart";
 
-import 'screens/controller/controller.dart';
+import 'controller/controller.dart';
 
-import 'screens/widgets/appbar.dart';
-import 'screens/widgets/mainbutton.dart';
+import "widgets/appbar.dart";
+import "widgets/mainbutton.dart";
 
-import 'screens/screens/home.dart';
-import 'screens/screens/history.dart';
+import "screens/home.dart";
+import "screens/history.dart";
+import "screens/settings.dart";
 
 void main() async {
   await Hive.initFlutter();
@@ -25,25 +26,26 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var controller = PageController(initialPage: 0);
-  var data;
 
   @override
   void initState() {
     super.initState();
-    
-    data=Provider.of<Controller>(context, listen: false);
 
-    data.openBox();
+    var provider = Provider.of<Controller>(context, listen: false);
 
-    Future.delayed(const Duration(seconds: 1), () {
-      if (Hive.box("box0").get("list0") == null) {
-        data.createData();
+    provider.openBox();
+
+    Future.delayed(const Duration(seconds: 2), () {
+      if (Hive.box("box0").get("list0") == null || provider.day != Hive.box("daybox").get("day")) {
+        provider.createData();
+        Hive.box("languagebox").get("languagemode") != null ? provider.english = false : true;
+        Hive.box("darkmodebox").get("darkmode") != null ? provider.darkMode = true : false;
       } else {
-        data.loadData();
-        data.defaultPercentageSize();
+        provider.loadData();
+        provider.defaultPercentageSize();
       }
 
-      data.loading = false;
+      provider.loading = false;
     });
   }
 
@@ -52,7 +54,7 @@ class _MyAppState extends State<MyApp> {
     var screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: PreferredSize(
-            preferredSize: Size.fromHeight(screenHeight / 12),
+            preferredSize: Size.fromHeight(screenHeight / 13),
             child: CustomAppBar(controller: controller)),
         body: Consumer<Controller>(builder: (context, value, child) {
           return Container(
@@ -75,7 +77,7 @@ class _MyAppState extends State<MyApp> {
                       }
                       value.changeAppBarColor();
                     },
-                    children: [HomeScreen(), HistoryScreen()]),
+                    children: [HomeScreen(), HistoryScreen(), SettingsScreen()]),
           );
         }),
         floatingActionButton: Consumer<Controller>(builder: (context, value, child) {

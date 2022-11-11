@@ -1,10 +1,10 @@
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wave/config.dart';
 import "package:wave/wave.dart";
 
 import '../controller/controller.dart';
+import '../widgets/switch.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -51,18 +51,9 @@ class HomeScreen extends StatelessWidget {
                     Positioned(
                       left: 0,
                       child: Container(
-                        margin: const EdgeInsets.all(20),
-                        child: FlutterSwitch(
-                          inactiveColor: Colors.grey,
-                          activeColor: const Color.fromARGB(255, 0, 84, 153),
-                          inactiveIcon: const Icon(Icons.sunny, color: Color.fromARGB(255, 226, 204, 0)),
-                          activeIcon: const Icon(Icons.nightlight, color: Colors.grey),
-                          value: value.darkMode,
-                          onToggle: (value) {
-                            Provider.of<Controller>(context, listen: false).changeDarkMode();
-                          },
-                        ),
-                      ),
+                          margin: const EdgeInsets.all(20),
+                          child: DarkModeSwitch(
+                              value: value, provider: Provider.of<Controller>(context, listen: false))),
                     )
                   ])
                 ],

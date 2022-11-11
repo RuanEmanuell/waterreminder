@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'dart:io';
+
 class Controller extends ChangeNotifier {
   //Args for the screens
   var index;
@@ -13,6 +15,7 @@ class Controller extends ChangeNotifier {
   //Visual variables
   var white = Colors.white;
   bool darkMode = false;
+  bool english = true;
   var page = 0;
   var grey = const Color.fromARGB(255, 102, 102, 102);
 
@@ -20,13 +23,17 @@ class Controller extends ChangeNotifier {
   var button2Color = const Color.fromARGB(255, 102, 102, 102);
   var button3Color = const Color.fromARGB(255, 102, 102, 102);
 
+  final String defaultLocale = Platform.localeName;
+
   //Info variables
   String text = "";
   bool isCustom = false;
   late double cupSize;
   double percentage = 0;
-  double size = 0.82;
+  double size = 0.825;
   bool ok = false;
+
+  var day = "${DateTime.now().day}";
 
   dynamic list0;
   dynamic list1;
@@ -40,6 +47,21 @@ class Controller extends ChangeNotifier {
   //Dark mode controller
   changeDarkMode() {
     darkMode = !darkMode;
+    if (darkMode) {
+      Hive.box("darkmodebox").put("darkmode", darkMode);
+    } else {
+      Hive.box("darkmodebox").clear();
+    }
+    notifyListeners();
+  }
+
+  changeLanguage() {
+    english = !english;
+    if (!english) {
+      Hive.box("languagebox").put("languagemode", english);
+    } else {
+      Hive.box("languagebox").clear();
+    }
     notifyListeners();
   }
 
@@ -123,6 +145,9 @@ class Controller extends ChangeNotifier {
     await Hive.openBox("box0");
     await Hive.openBox("box1");
     await Hive.openBox("box2");
+    await Hive.openBox("darkmodebox");
+    await Hive.openBox("languagebox");
+    await Hive.openBox("daybox");
   }
 
   //This create data if it's your first time opening the app
@@ -130,6 +155,10 @@ class Controller extends ChangeNotifier {
     list0 = [];
     list1 = [];
     list2 = [];
+    if (defaultLocale == "pt_BR" || defaultLocale == "PT_PT") {
+      english = false;
+    }
+    Hive.box("daybox").put("day", day);
     notifyListeners();
   }
 
@@ -138,6 +167,12 @@ class Controller extends ChangeNotifier {
     list0 = Hive.box("box0").get("list0");
     list1 = Hive.box("box1").get("list1");
     list2 = Hive.box("box2").get("list2");
+    Hive.box("darkmodebox").get("darkmode");
+    Hive.box("languagebox").get("languagemode");
+
+    Hive.box("darkmodebox").isNotEmpty ? darkMode = true : false;
+    Hive.box("languagebox").isNotEmpty ? english = false : true;
+
     notifyListeners();
   }
 

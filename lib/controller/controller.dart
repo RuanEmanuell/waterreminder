@@ -55,6 +55,7 @@ class Controller extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Language changer
   changeLanguage() {
     english = !english;
     if (!english) {
@@ -105,7 +106,7 @@ class Controller extends ChangeNotifier {
   //This increase the percentage and the wave size, respectively
   increasePercentage() {
     percentage = percentage + cupSize / 20;
-    percentage <= 100 ? size = size - cupSize / 2000 : size = -0.2;
+    percentage <= 100 ? size = size - cupSize / 1900 : size = -0.2;
   }
 
   //This one is the main function for adding cups, being custom it send the
@@ -137,7 +138,7 @@ class Controller extends ChangeNotifier {
       percentage = percentage + i / 20;
     }
 
-    percentage <= 100 ? size = size - (percentage / 100) : size = -0.2;
+    percentage <= 100 ? size = size - (percentage / 95) : size = -0.2;
   }
 
   //These are the Hive functions, this one opens the data box
@@ -148,6 +149,7 @@ class Controller extends ChangeNotifier {
     await Hive.openBox("darkmodebox");
     await Hive.openBox("languagebox");
     await Hive.openBox("daybox");
+    await Hive.openBox("mensagebox");
   }
 
   //This create data if it's your first time opening the app
@@ -181,5 +183,11 @@ class Controller extends ChangeNotifier {
     Hive.box("box0").put("list0", list0);
     Hive.box("box1").put("list1", list1);
     Hive.box("box2").put("list2", list2);
+  }
+
+  //This one sets ok for the message dialog, making it never appear again
+  void okFunction() {
+    ok = true;
+    Hive.box("mensagebox").put("ok", ok);
   }
 }

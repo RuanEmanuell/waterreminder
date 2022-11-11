@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import "package:provider/provider.dart";
 import "package:hive_flutter/hive_flutter.dart";
 import 'package:awesome_notifications/awesome_notifications.dart';
-import "package:cron/cron.dart";
+
+import 'dart:io';
 
 import 'controller/controller.dart';
 
@@ -17,18 +18,32 @@ void main() async {
   await Hive.initFlutter();
   WidgetsFlutterBinding.ensureInitialized();
 
-  await AwesomeNotifications().initialize(null, // icon for your app notification
-      [
-        NotificationChannel(
-            channelKey: 'key1',
-            channelName: 'Proto Coders Point',
-            channelDescription: "Notification example",
-            defaultColor: Color.fromARGB(255, 110, 45, 190),
-            ledColor: Colors.white,
-            playSound: false,
-            enableLights: false,
-            enableVibration: true)
-      ]);
+  await AwesomeNotifications().initialize(null, [
+    NotificationChannel(
+        channelKey: 'key1',
+        channelName: 'Notification',
+        channelDescription: "Water notification",
+        defaultColor: const Color.fromARGB(255, 0, 80, 145),
+        ledColor: const Color.fromARGB(255, 59, 193, 255),
+        playSound: true,
+        enableLights: false,
+        enableVibration: true)
+  ]);
+
+  String localTimeZone = await AwesomeNotifications().getLocalTimeZoneIdentifier();
+  String defaultLocale = Platform.localeName;
+
+  await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+          id: 0,
+          channelKey: 'key1',
+          title: defaultLocale == "pt_BR" || defaultLocale == "PT_PT"
+              ? "Hora de tomar água"
+              : "Let's drink water!",
+          body: defaultLocale == "pt_BR" || defaultLocale == "PT_PT"
+              ? "Um copo de água vai cair bem!"
+              : "A glass of water would be great!"),
+      schedule: NotificationInterval(interval: 60, timeZone: localTimeZone, repeats: true));
 
   runApp(MultiProvider(
       providers: [ChangeNotifierProvider(create: (context) => Controller())],
@@ -48,17 +63,6 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     var provider = Provider.of<Controller>(context, listen: false);
-
-    final cron = Cron();
-
-    cron.schedule(Schedule.parse('*/1 * * * *'), () async {
-      await AwesomeNotifications().createNotification(
-          content: NotificationContent(
-              id: 1,
-              channelKey: "key1",
-              title: provider.english ? "Time to drink water!" : "Hora de beber água!",
-              body: provider.english ? "A cup would be great!" : "Um copo vai cair bem!"));
-    });
 
     provider.openBox();
 

@@ -41,6 +41,7 @@ dependencies:
   flutter_switch: ^0.3.2
   cron: ^0.5.0
   awesome_notifications: ^0.6.21
+  flutter_native_splash: ^2.2.14
 
 dev_dependencies:
 
@@ -76,3 +77,11 @@ flutter_icons:
   remove_alpha_ios: true
   image_path: "assets/images/logo.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
+
+flutter_native_splash:
+  color: "#55AAFF"
+  image: "assets/images/logo.png"
+
+  android_12:
+    color: "#55AAFF"
+    image: "assets/images/logo.png"

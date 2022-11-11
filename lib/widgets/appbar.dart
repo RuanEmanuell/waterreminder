@@ -32,21 +32,19 @@ class CustomAppBar extends StatelessWidget {
                 ],
               ),
             )),
-            Expanded(
-              child: InkWell(
-                onTap: () {
-                  controller.animateToPage(1,
-                      curve: Curves.easeOut, duration: const Duration(milliseconds: 250));
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.history, color: value.button2Color),
-                    Container(width: 10),
-                    Text(value.english ? english[1] : portuguese[1],
-                        style: TextStyle(color: value.button2Color))
-                  ],
-                ),
+            InkWell(
+              onTap: () {
+                controller.animateToPage(1,
+                    curve: Curves.easeOut, duration: const Duration(milliseconds: 250));
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.history, color: value.button2Color),
+                  Container(width: 10),
+                  Text(value.english ? english[1] : portuguese[1],
+                      style: TextStyle(color: value.button2Color))
+                ],
               ),
             ),
             Expanded(

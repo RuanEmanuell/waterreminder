@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:hive_flutter/hive_flutter.dart';
 
 import "../screens/add.dart";
 import "dialog.dart";
@@ -14,7 +15,7 @@ class MainButton extends StatelessWidget {
     return FloatingActionButton(
         heroTag: heroTag,
         onPressed: () {
-          if (value.percentage >= 100 && !value.ok) {
+          if (value.percentage >= 100 && Hive.box("mensagebox").isEmpty) {
             showDialog(
               context: context,
               builder: (context) {

@@ -11,16 +11,18 @@ class WarningDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        content: Text(
-          value.english ? english[9] : portuguese[9],
-        ),
+        backgroundColor: value.darkMode ? const Color.fromARGB(255, 29, 29, 29) : Colors.white,
+        content: Text(value.english ? english[9] : portuguese[9],
+            style: TextStyle(
+              color: value.darkMode ? Colors.white : Colors.black,
+            )),
         actions: [
           TextButton(
               onPressed: () {
-                value.ok = true;
+                value.okFunction();
                 Navigator.pop(context);
               },
-              child: const Text("Ok"))
+              child: Text("Ok", style: TextStyle(color: value.darkMode ? Colors.white : Colors.black)))
         ]);
   }
 }
@@ -33,23 +35,32 @@ class CustomDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(content: Text(value.english ? english[8] : portuguese[8]), actions: [
-      TextField(
-          maxLength: 4,
-          controller: textController,
-          keyboardType: TextInputType.number,
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly]),
-      TextButton(
-          onPressed: () {
-            if (textController.text.isNotEmpty) {
-              value.isCustom = true;
-              value.text = textController.text;
-              value.addCup();
-              Navigator.pop(context);
-              Navigator.pop(context);
-            }
-          },
-          child: const Text("Ok"))
-    ]);
+    return AlertDialog(
+        backgroundColor: value.darkMode ? const Color.fromARGB(255, 29, 29, 29) : Colors.white,
+        content: Text(value.english ? english[8] : portuguese[8],
+            style: TextStyle(color: value.darkMode ? Colors.white : Colors.black)),
+        actions: [
+          TextField(
+              maxLength: 4,
+              controller: textController,
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              style: TextStyle(color: value.darkMode ? Colors.white : Colors.black),
+              decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(width: 2, color: value.darkMode ? Colors.white : Colors.black)))),
+          TextButton(
+              onPressed: () {
+                if (textController.text.isNotEmpty) {
+                  value.isCustom = true;
+                  value.text = textController.text;
+                  value.addCup();
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                }
+              },
+              child: Text("Ok", style: TextStyle(color: value.darkMode ? Colors.white : Colors.black)))
+        ]);
   }
 }

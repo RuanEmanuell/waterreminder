@@ -40,6 +40,11 @@ class Controller extends ChangeNotifier {
   //Dark mode controller
   changeDarkMode() {
     darkMode = !darkMode;
+    if (darkMode == true) {
+      Hive.box("darkmodebox").put("darkmode", darkMode);
+    } else {
+      Hive.box("darkmodebox").clear();
+    }
     notifyListeners();
   }
 
@@ -123,6 +128,7 @@ class Controller extends ChangeNotifier {
     await Hive.openBox("box0");
     await Hive.openBox("box1");
     await Hive.openBox("box2");
+    await Hive.openBox("darkmodebox");
   }
 
   //This create data if it's your first time opening the app
@@ -138,6 +144,10 @@ class Controller extends ChangeNotifier {
     list0 = Hive.box("box0").get("list0");
     list1 = Hive.box("box1").get("list1");
     list2 = Hive.box("box2").get("list2");
+    Hive.box("darkmodebox").get("darkmode");
+
+    Hive.box("darkmodebox").isNotEmpty ? darkMode = true : false;
+
     notifyListeners();
   }
 

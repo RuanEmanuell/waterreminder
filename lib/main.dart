@@ -9,6 +9,7 @@ import "widgets/mainbutton.dart";
 
 import "screens/home.dart";
 import "screens/history.dart";
+import "screens/settings.dart";
 
 void main() async {
   await Hive.initFlutter();
@@ -71,7 +72,7 @@ class _MyAppState extends State<MyApp> {
                       }
                       value.changeAppBarColor();
                     },
-                    children: [HomeScreen(), HistoryScreen()]),
+                    children: [HomeScreen(), HistoryScreen(), SettingsScreen()]),
           );
         }),
         floatingActionButton: Consumer<Controller>(builder: (context, value, child) {

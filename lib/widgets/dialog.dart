@@ -1,8 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
 
-import '../models/languages.dart';
-
 class WarningDialog extends StatelessWidget {
   var value;
 
@@ -11,9 +9,8 @@ class WarningDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        content: Text(
-          value.english ? english[9] : portuguese[9],
-        ),
+        content: const Text(
+            "You've already hit the official goal of 2 liters of water per day from the World Health Organization, but we will continue to monitor! Let's drink water!"),
         actions: [
           TextButton(
               onPressed: () {
@@ -33,7 +30,7 @@ class CustomDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(content: Text(value.english ? english[8] : portuguese[8]), actions: [
+    return AlertDialog(content: const Text("Add other size (ml)"), actions: [
       TextField(
           maxLength: 4,
           controller: textController,

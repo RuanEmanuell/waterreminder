@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import '../controller/controller.dart';
 
-import '../models/languages.dart';
 import "../widgets/cuphistory.dart";
 import "../widgets/mainbutton.dart";
 
@@ -25,8 +24,8 @@ class HistoryScreen extends StatelessWidget {
                       ? Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(value.english ? english[3] : portuguese[3],
-                                style: const TextStyle(color: Color.fromARGB(255, 102, 102, 102))),
+                            const Text("It looks like you still don't have drink water today...",
+                                style: TextStyle(color: Color.fromARGB(255, 102, 102, 102))),
                             const SizedBox(height: 10),
                             MainButton(value: value, heroTag: "btn2")
                           ],

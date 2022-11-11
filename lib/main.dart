@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import "package:provider/provider.dart";
 import "package:hive_flutter/hive_flutter.dart";
 
-import 'controller/controller.dart';
+import 'screens/controller/controller.dart';
 
-import "widgets/appbar.dart";
-import "widgets/mainbutton.dart";
+import 'screens/widgets/appbar.dart';
+import 'screens/widgets/mainbutton.dart';
 
-import "screens/home.dart";
-import "screens/history.dart";
-import "screens/settings.dart";
+import 'screens/screens/home.dart';
+import 'screens/screens/history.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -26,28 +25,25 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var controller = PageController(initialPage: 0);
+  var data;
 
   @override
   void initState() {
     super.initState();
     
-    var provider=Provider.of<Controller>(context, listen: false);
+    data=Provider.of<Controller>(context, listen: false);
 
-    
+    data.openBox();
 
-    provider.openBox();
-
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 1), () {
       if (Hive.box("box0").get("list0") == null) {
-        provider.createData();
-        Hive.box("languagebox").get("languagemode") != null? provider.english = false:true; 
-        Hive.box("darkmodebox").get("darkmode") != null ? provider.darkMode = true:false;
+        data.createData();
       } else {
-        provider.loadData();
-        provider.defaultPercentageSize();
+        data.loadData();
+        data.defaultPercentageSize();
       }
 
-      provider.loading = false;
+      data.loading = false;
     });
   }
 
@@ -79,7 +75,7 @@ class _MyAppState extends State<MyApp> {
                       }
                       value.changeAppBarColor();
                     },
-                    children: [HomeScreen(), HistoryScreen(), SettingsScreen()]),
+                    children: [HomeScreen(), HistoryScreen()]),
           );
         }),
         floatingActionButton: Consumer<Controller>(builder: (context, value, child) {

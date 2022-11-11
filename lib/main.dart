@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import "package:provider/provider.dart";
 import "package:hive_flutter/hive_flutter.dart";
+import 'package:awesome_notifications/awesome_notifications.dart';
+import "package:cron/cron.dart";
 
 import 'controller/controller.dart';
 
@@ -13,6 +15,20 @@ import "screens/settings.dart";
 
 void main() async {
   await Hive.initFlutter();
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await AwesomeNotifications().initialize(null, // icon for your app notification
+      [
+        NotificationChannel(
+            channelKey: 'key1',
+            channelName: 'Proto Coders Point',
+            channelDescription: "Notification example",
+            defaultColor: Color.fromARGB(255, 110, 45, 190),
+            ledColor: Colors.white,
+            playSound: false,
+            enableLights: false,
+            enableVibration: true)
+      ]);
 
   runApp(MultiProvider(
       providers: [ChangeNotifierProvider(create: (context) => Controller())],
@@ -32,6 +48,17 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     var provider = Provider.of<Controller>(context, listen: false);
+
+    final cron = Cron();
+
+    cron.schedule(Schedule.parse('*/1 * * * *'), () async {
+      await AwesomeNotifications().createNotification(
+          content: NotificationContent(
+              id: 1,
+              channelKey: "key1",
+              title: provider.english ? "Time to drink water!" : "Hora de beber água!",
+              body: provider.english ? "A cup would be great!" : "Um copo vai cair bem!"));
+    });
 
     provider.openBox();
 

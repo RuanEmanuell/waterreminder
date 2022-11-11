@@ -33,7 +33,7 @@ class Controller extends ChangeNotifier {
   double size = 0.825;
   bool ok = false;
 
-  var day = "${DateTime.now().day}";
+  String day = "${DateTime.now().day}";
 
   dynamic list0;
   dynamic list1;

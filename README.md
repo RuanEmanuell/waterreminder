@@ -2,7 +2,7 @@
 
 ## Water Reminder
 
-This project is a simple Water Reminder, but I learned a lot from it. In this project I learned to manage persistant data (with Hive), send app notifications (with Awesome Notifications), I also learned a lot about other things (such as in-app translation and dark mode) and it was great to increase my Flutter skills overall. It is also my first app to be available on Google Play, which was great to learn about this process too.
+This project is a simple Water Reminder, but I learned a lot from it. In this project I learned to manage persistant data (with Hive), send app notifications (with Awesome Notifications), I also learned a lot about other things (such as in-app translation and dark mode) and it was great to increase my Flutter skills overall. It is also my first app to be available on Google Play, and this was great to learn about this process too.
 
 ### How to Run
 

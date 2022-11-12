@@ -18,12 +18,14 @@ class CupHistoryWidget extends StatelessWidget {
         Expanded(
           child: Text("${value.list1[index]}ml",
               style: TextStyle(
-                  fontWeight: FontWeight.bold, color: value.darkMode ? Colors.white : Colors.grey)),
+                  fontWeight: FontWeight.bold,
+                  color: value.darkMode ? Colors.white : const Color.fromARGB(255, 94, 94, 94))),
         ),
         const SizedBox(width: 5),
         Text(value.list2[index],
             style: TextStyle(
-                fontWeight: FontWeight.bold, color: value.darkMode ? Colors.white : Colors.grey)),
+                fontWeight: FontWeight.bold,
+                color: value.darkMode ? Colors.white : const Color.fromARGB(255, 94, 94, 94))),
       ],
     );
   }

@@ -29,7 +29,7 @@ class HistoryScreen extends StatelessWidget {
                                 style: TextStyle(
                                     color: value.darkMode
                                         ? Colors.white
-                                        : const Color.fromARGB(255, 102, 102, 102))),
+                                        : const Color.fromARGB(255, 94, 94, 94))),
                             const SizedBox(height: 10),
                             MainButton(value: value, heroTag: "btn2")
                           ],

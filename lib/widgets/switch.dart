@@ -10,7 +10,7 @@ class DarkModeSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlutterSwitch(
-        inactiveColor: Colors.grey,
+        inactiveColor: const Color.fromARGB(255, 94, 94, 94),
         activeColor: const Color.fromARGB(255, 0, 84, 153),
         inactiveIcon: const Icon(Icons.sunny, color: Color.fromARGB(255, 226, 204, 0)),
         activeIcon: const Icon(Icons.nightlight, color: Colors.grey),

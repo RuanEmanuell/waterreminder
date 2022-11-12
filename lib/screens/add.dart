@@ -66,7 +66,7 @@ class AddScreen extends StatelessWidget {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: screenWidth / 20,
-                            color: value.darkMode ? Colors.white : Colors.black,
+                            color: value.darkMode ? Colors.white : const Color.fromARGB(255, 94, 94, 94),
                           ))
                     ],
                   ),

@@ -15,7 +15,7 @@ class MainButton extends StatelessWidget {
     return FloatingActionButton(
         heroTag: heroTag,
         onPressed: () {
-          if (value.percentage >= 100 && Hive.box("mensagebox").isEmpty) {
+          if (value.percentage >= 100 && Hive.box("mensagebox").get("ok") == null) {
             showDialog(
               context: context,
               builder: (context) {
@@ -29,9 +29,8 @@ class MainButton extends StatelessWidget {
             },
           ));
         },
-        backgroundColor: value.darkMode
-            ? const Color.fromARGB(255, 0, 84, 153)
-            : const Color.fromARGB(255, 102, 102, 102),
+        backgroundColor:
+            value.darkMode ? const Color.fromARGB(255, 0, 84, 153) : const Color.fromARGB(255, 94, 94, 94),
         child: const Icon(Icons.add, size: 30, color: Colors.white));
   }
 }

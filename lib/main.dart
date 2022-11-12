@@ -18,6 +18,7 @@ void main() async {
   await Hive.initFlutter();
   WidgetsFlutterBinding.ensureInitialized();
 
+  //Notifications
   await AwesomeNotifications().initialize(null, [
     NotificationChannel(
         channelKey: 'key1',
@@ -43,7 +44,7 @@ void main() async {
           body: defaultLocale == "pt_BR" || defaultLocale == "PT_PT"
               ? "Um copo de água vai cair bem!"
               : "A glass of water would be great!"),
-      schedule: NotificationInterval(interval: 60, timeZone: localTimeZone, repeats: true));
+      schedule: NotificationInterval(interval: 3000, timeZone: localTimeZone, repeats: true));
 
   runApp(MultiProvider(
       providers: [ChangeNotifierProvider(create: (context) => Controller())],
@@ -63,6 +64,8 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     var provider = Provider.of<Controller>(context, listen: false);
+
+    //Hive (persistand data) management
 
     provider.openBox();
 

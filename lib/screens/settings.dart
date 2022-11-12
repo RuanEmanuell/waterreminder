@@ -27,7 +27,7 @@ class SettingsScreen extends StatelessWidget {
                   child: Text(value.english ? english[6] : portuguese[6],
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: value.darkMode ? Colors.white : Colors.grey)),
+                          color: value.darkMode ? Colors.white : const Color.fromARGB(255, 94, 94, 94))),
                 ),
                 DarkModeSwitch(value: value, provider: Provider.of<Controller>(context, listen: false))
               ]),
@@ -37,7 +37,7 @@ class SettingsScreen extends StatelessWidget {
                   child: Text(value.english ? english[7] : portuguese[7],
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: value.darkMode ? Colors.white : Colors.grey)),
+                          color: value.darkMode ? Colors.white : const Color.fromARGB(255, 94, 94, 94))),
                 ),
                 LanguageSwitch(value: value, provider: Provider.of<Controller>(context, listen: false))
               ]),

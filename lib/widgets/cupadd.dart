@@ -20,7 +20,7 @@ class CupAddWidget extends StatelessWidget {
           Text("${size}ml",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: value.darkMode ? Colors.white : Colors.black,
+                color: value.darkMode ? Colors.white : const Color.fromARGB(255, 94, 94, 94),
               )),
         ]),
       ),

@@ -29,8 +29,9 @@ class MainButton extends StatelessWidget {
             },
           ));
         },
-        backgroundColor:
-            value.darkMode ? const Color.fromARGB(255, 0, 84, 153) : const Color.fromARGB(255, 94, 94, 94),
+        backgroundColor: value.darkMode
+            ? const Color.fromARGB(255, 0, 84, 153)
+            : const Color.fromARGB(255, 94, 94, 94),
         child: const Icon(Icons.add, size: 30, color: Colors.white));
   }
 }

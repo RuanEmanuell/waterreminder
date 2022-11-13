@@ -23,6 +23,7 @@ class AddScreen extends StatelessWidget {
             centerTitle: true,
             title: Text(value.english ? english[4] : portuguese[4])),
         body: SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
           child: Container(
             color: value.darkMode ? Colors.black : Colors.white,
             width: screenWidth,
@@ -31,6 +32,7 @@ class AddScreen extends StatelessWidget {
               SizedBox(
                 height: screenHeight / 2,
                 child: GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
                   itemCount: value.cups[0].length,
                   itemBuilder: (context, index) {

@@ -4,7 +4,7 @@
 
 Esse projeto é um simples lembrete de tomar água, mas eu aprendi muito com ele. Nesse projeto eu aprendi a salvar e excluir dados da memória (com o Hive), 
 mandar notificações (com Awesome Notifications). Eu também aprendi muito sobre coisas como tradução do app e modo escuro, e foi muito bom pra melhorar minhas
-habilidades com Flutter no geral. Também foi meu primeiro projeto lançado no Google Play, e eu aprendi muito sobre o processo de postar apps lá também.
+habilidades com Flutter no geral. Também foi meu primeiro projeto lançado no <a href="https://play.google.com/store/apps/details?id=com.ruanemanuell.water_reminder">Google Play</a>, e eu aprendi muito sobre o processo de postar apps lá também.
 
 ### Como rodar
 

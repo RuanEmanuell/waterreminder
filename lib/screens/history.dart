@@ -20,7 +20,9 @@ class HistoryScreen extends StatelessWidget {
                 child: Container(
                   height: screenHeight,
                   width: screenWidth,
-                  color: value.darkMode ? const Color.fromARGB(255, 29, 29, 29) : Colors.white,
+                  color: value.darkMode
+                      ? const Color.fromARGB(255, 29, 29, 29)
+                      : Colors.white,
                   child: value.list0.length == 0
                       ? Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -29,7 +31,8 @@ class HistoryScreen extends StatelessWidget {
                                 style: TextStyle(
                                     color: value.darkMode
                                         ? Colors.white
-                                        : const Color.fromARGB(255, 94, 94, 94))),
+                                        : const Color.fromARGB(
+                                            255, 94, 94, 94))),
                             const SizedBox(height: 10),
                             MainButton(value: value, heroTag: "btn2")
                           ],
@@ -40,10 +43,20 @@ class HistoryScreen extends StatelessWidget {
                             itemCount: value.list0.length,
                             itemBuilder: (context, index) {
                               return Container(
-                                  margin: const EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              color: Colors.grey, width: 1))),
                                   alignment: Alignment.center,
-                                  child: CupHistoryWidget(index: index, value: value));
-                            },
+                                  child: CupHistoryWidget(
+                                      index: index,
+                                      value: value,
+                                      removeButtonVisible: true
+                                  )
+                              );
+
+                            }
+                          
                           ),
                         ),
                 ))));

@@ -68,20 +68,17 @@ class Controller extends ChangeNotifier {
 
   //AppBar color function
   changeAppBarColor() {
+    button1Color = grey;
+    button2Color = grey;
+    button3Color = grey;
     switch (page) {
       case 0:
         button1Color = white;
-        button2Color = grey;
-        button3Color = grey;
         break;
       case 1:
-        button1Color = grey;
         button2Color = white;
-        button3Color = grey;
         break;
       case 2:
-        button1Color = grey;
-        button2Color = grey;
         button3Color = white;
         break;
     }
@@ -126,6 +123,19 @@ class Controller extends ChangeNotifier {
     increasePercentage();
     updateDatabase();
     notifyListeners();
+  }
+
+  //This is the opposite, removing the cups, and does the same thing with the wave, but in reverse
+  removeCup(index) async {
+    cupSize = double.parse(list1[index]) * -1.0;
+    list0.removeAt(index);
+    list1.removeAt(index);
+    list2.removeAt(index);
+    takeHour();
+    increasePercentage();
+    updateDatabase();
+    notifyListeners();
+
   }
 
   ///////////////Below there are Hive and persistant data functions/////////////

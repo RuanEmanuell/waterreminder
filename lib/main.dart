@@ -98,17 +98,7 @@ class _MyAppState extends State<MyApp> {
                 : PageView(
                     controller: controller,
                     onPageChanged: (page) {
-                      switch (page) {
-                        case 0:
-                          value.page = 0;
-                          break;
-                        case 1:
-                          value.page = 1;
-                          break;
-                        case 2:
-                          value.page = 2;
-                          break;
-                      }
+                      value.page = page;
                       value.changeAppBarColor();
                     },
                     children: [HomeScreen(), HistoryScreen(), SettingsScreen()]),

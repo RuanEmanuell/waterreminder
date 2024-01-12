@@ -31,6 +31,7 @@ class Controller extends ChangeNotifier {
   late double cupSize;
   double percentage = 0;
   double size = 0.825;
+  double goal = 2.0;
   bool ok = false;
 
   String day = "${DateTime.now().day}";
@@ -135,7 +136,6 @@ class Controller extends ChangeNotifier {
     increasePercentage();
     updateDatabase();
     notifyListeners();
-
   }
 
   ///////////////Below there are Hive and persistant data functions/////////////
@@ -160,6 +160,7 @@ class Controller extends ChangeNotifier {
     await Hive.openBox("languagebox");
     await Hive.openBox("daybox");
     await Hive.openBox("mensagebox");
+    await Hive.openBox("goalbox");
   }
 
   //This create data if it's your first time opening the app
@@ -171,6 +172,7 @@ class Controller extends ChangeNotifier {
       english = false;
     }
     Hive.box("daybox").put("day", day);
+    Hive.box("goalbox").put("goal", goal);
     notifyListeners();
   }
 
@@ -179,6 +181,7 @@ class Controller extends ChangeNotifier {
     list0 = Hive.box("box0").get("list0");
     list1 = Hive.box("box1").get("list1");
     list2 = Hive.box("box2").get("list2");
+    goal = Hive.box("goalbox").get("goal");
     Hive.box("darkmodebox").get("darkmode");
     Hive.box("languagebox").get("languagemode");
 
@@ -193,6 +196,20 @@ class Controller extends ChangeNotifier {
     Hive.box("box0").put("list0", list0);
     Hive.box("box1").put("list1", list1);
     Hive.box("box2").put("list2", list2);
+  }
+
+  void changeGoal(goalValue) async {
+    Hive.box("goalbox").put("goal", goalValue);
+    notifyListeners();
+  }
+
+  void dismissGoal(changedGoal){
+    if(changedGoal){
+      changeGoal(goal);
+    }else{
+      goal = Hive.box("goalbox").get("goal");
+    }
+    notifyListeners();
   }
 
   //This one sets ok for the message dialog, making it never appear again

@@ -1,4 +1,7 @@
+import 'package:alarme/screens/add.dart';
+import 'package:alarme/widgets/dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 import '../controller/controller.dart';
@@ -34,30 +37,45 @@ class HistoryScreen extends StatelessWidget {
                                         : const Color.fromARGB(
                                             255, 94, 94, 94))),
                             const SizedBox(height: 10),
-                            MainButton(value: value, heroTag: "btn2")
+                            MainButton(
+                              value: value,
+                              heroTag: "btn3",
+                              icon: Icons.add,
+                              onPressed: () {
+                                if (value.percentage >= 100 &&
+                                    Hive.box("mensagebox").get("ok") == null) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return WarningDialog(value: value);
+                                    },
+                                  );
+                                }
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return AddScreen();
+                                  },
+                                ));
+                              },
+                            )
                           ],
                         )
                       : SizedBox(
                           height: screenHeight / 1.12,
                           child: ListView.builder(
-                            itemCount: value.list0.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              color: Colors.grey, width: 1))),
-                                  alignment: Alignment.center,
-                                  child: CupHistoryWidget(
-                                      index: index,
-                                      value: value,
-                                      removeButtonVisible: true
-                                  )
-                              );
-
-                            }
-                          
-                          ),
+                              itemCount: value.list0.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: Colors.grey, width: 1))),
+                                    alignment: Alignment.center,
+                                    child: CupHistoryWidget(
+                                        index: index,
+                                        value: value,
+                                        removeButtonVisible: true));
+                              }),
                         ),
                 ))));
   }

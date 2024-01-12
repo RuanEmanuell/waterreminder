@@ -103,8 +103,8 @@ class Controller extends ChangeNotifier {
 
   //This increase the percentage and the wave size, respectively
   increasePercentage() {
-    percentage = percentage + cupSize / 20;
-    percentage <= 100 ? size = size - cupSize / 1900 : size = -0.2;
+    percentage = percentage + cupSize / (goal*10);
+    percentage <= 100 ? size = size - cupSize / (goal*1000) : size = -0.2;
   }
 
   //This one is the main function for adding cups, being custom it send the
@@ -143,12 +143,19 @@ class Controller extends ChangeNotifier {
   //Deciding what percentage will be displayed when you open the app based
   //on the items that are on the history
   void defaultPercentageSize() {
+    percentage = 0;
+    size = 0.825;
+
     for (var i in list1) {
-      i = int.parse(i);
-      percentage = percentage + i / 20;
+      i = double.parse(i);
+      percentage = percentage + i / (goal*10);
     }
 
-    percentage <= 100 ? size = size - (percentage / 95) : size = -0.2;
+    if (percentage >= 0 && percentage <= 100) {
+      size = 0.825 - (percentage / 100);
+    } else {
+      size = -0.2;
+    }
   }
 
   //These are the Hive functions, this one opens the data box
@@ -206,6 +213,7 @@ class Controller extends ChangeNotifier {
   void dismissGoal(changedGoal){
     if(changedGoal){
       changeGoal(goal);
+      defaultPercentageSize();
     }else{
       goal = Hive.box("goalbox").get("goal");
     }

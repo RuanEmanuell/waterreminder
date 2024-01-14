@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart'; 
+import 'package:intl/date_symbol_data_local.dart'; 
 
 import 'dart:io';
 
@@ -36,9 +38,11 @@ class Controller extends ChangeNotifier {
 
   String day = "${DateTime.now().day}";
 
-  dynamic list0;
-  dynamic list1;
-  dynamic list2;
+  late List<dynamic> list0, list1, list2, dayList, waterList;
+
+  String dayWaterText = "";
+  late DateTime calendarFirstDay;
+  late DateTime calendarLastDay;
 
   var cups = [
     ["cup", "glass", "big glass", "bottle", "jar", "big bottle"],
@@ -57,13 +61,15 @@ class Controller extends ChangeNotifier {
   }
 
   //Language changer
-  changeLanguage() {
+  void changeLanguage() {
     english = !english;
+
     if (!english) {
       Hive.box("languagebox").put("languagemode", english);
     } else {
       Hive.box("languagebox").clear();
     }
+
     notifyListeners();
   }
 
@@ -72,6 +78,7 @@ class Controller extends ChangeNotifier {
     button1Color = grey;
     button2Color = grey;
     button3Color = grey;
+
     switch (page) {
       case 0:
         button1Color = white;
@@ -83,13 +90,14 @@ class Controller extends ChangeNotifier {
         button3Color = white;
         break;
     }
+
     notifyListeners();
   }
 
   //////////////Below there are the add cup functions///////////////////////////
 
   //This one takes the time where you added the cup
-  takeHour() {
+  void takeHour() {
     var hour = DateTime.now().hour;
     var minute = DateTime.now().minute;
     if (minute < 10) {
@@ -102,15 +110,15 @@ class Controller extends ChangeNotifier {
   }
 
   //This increase the percentage and the wave size, respectively
-  increasePercentage() {
-    percentage = percentage + cupSize / (goal*10);
-    percentage <= 100 ? size = size - cupSize / (goal*1000) : size = -0.2;
+  void increasePercentage() {
+    percentage = percentage + cupSize / (goal * 10);
+    percentage <= 100 ? size = size - cupSize / (goal * 1000) : size = -0.2;
   }
 
   //This one is the main function for adding cups, being custom it send the
   //custom cup and the text you tiped alongside with the cupSize for the wave,
   //if it's not custom it will only send the cup data and the cupSize
-  addCup() async {
+  void addCup() async {
     if (isCustom) {
       list0.add("custom");
       list1.add(text);
@@ -120,6 +128,7 @@ class Controller extends ChangeNotifier {
       list0.add(cups[0][index]);
       list1.add(cups[1][index]);
     }
+
     takeHour();
     increasePercentage();
     updateDatabase();
@@ -127,7 +136,7 @@ class Controller extends ChangeNotifier {
   }
 
   //This is the opposite, removing the cups, and does the same thing with the wave, but in reverse
-  removeCup(index) async {
+  void removeCup(index) async {
     cupSize = double.parse(list1[index]) * -1.0;
     list0.removeAt(index);
     list1.removeAt(index);
@@ -148,7 +157,7 @@ class Controller extends ChangeNotifier {
 
     for (var i in list1) {
       i = double.parse(i);
-      percentage = percentage + i / (goal*10);
+      percentage = percentage + i / (goal * 10);
     }
 
     if (percentage >= 0 && percentage <= 100) {
@@ -168,6 +177,8 @@ class Controller extends ChangeNotifier {
     await Hive.openBox("daybox");
     await Hive.openBox("mensagebox");
     await Hive.openBox("goalbox");
+    await Hive.openBox("daylistbox");
+    await Hive.openBox("daywaterbox");
   }
 
   //This create data if it's your first time opening the app
@@ -175,11 +186,25 @@ class Controller extends ChangeNotifier {
     list0 = [];
     list1 = [];
     list2 = [];
+    dayList = [];
+    waterList = [];
+
+    if (Hive.box("daylistbox").get("daylist") != null) {
+      dayList = Hive.box("daylistbox").get("daylist");
+      waterList = Hive.box("daywaterbox").get("waterlist");
+    } 
+
     if (defaultLocale == "pt_BR" || defaultLocale == "PT_PT") {
       english = false;
     }
+
+    dayList.add(DateFormat('yyyy-MM-dd').format(DateTime.now()));
+    waterList.add(0);
+
     Hive.box("daybox").put("day", day);
     Hive.box("goalbox").put("goal", goal);
+    Hive.box("daylistbox").put("daylist", dayList);
+    Hive.box("daywaterbox").put("waterlist", waterList);
     notifyListeners();
   }
 
@@ -191,6 +216,8 @@ class Controller extends ChangeNotifier {
     goal = Hive.box("goalbox").get("goal");
     Hive.box("darkmodebox").get("darkmode");
     Hive.box("languagebox").get("languagemode");
+    dayList = Hive.box("daylistbox").get("daylist");
+    waterList = Hive.box("daywaterbox").get("waterlist");
 
     Hive.box("darkmodebox").isNotEmpty ? darkMode = true : false;
     Hive.box("languagebox").isNotEmpty ? english = false : true;
@@ -203,6 +230,9 @@ class Controller extends ChangeNotifier {
     Hive.box("box0").put("list0", list0);
     Hive.box("box1").put("list1", list1);
     Hive.box("box2").put("list2", list2);
+    waterList[dayList.length - 1] = waterList[dayList.length - 1] + cupSize;
+    Hive.box("daylistbox").put("daylist", dayList);
+    Hive.box("daywaterbox").put("waterlist", waterList);
   }
 
   void changeGoal(goalValue) async {
@@ -210,11 +240,11 @@ class Controller extends ChangeNotifier {
     notifyListeners();
   }
 
-  void dismissGoal(changedGoal){
-    if(changedGoal){
+  void dismissGoal(changedGoal) {
+    if (changedGoal) {
       changeGoal(goal);
       defaultPercentageSize();
-    }else{
+    } else {
       goal = Hive.box("goalbox").get("goal");
     }
     notifyListeners();
@@ -225,4 +255,19 @@ class Controller extends ChangeNotifier {
     ok = true;
     Hive.box("mensagebox").put("ok", ok);
   }
+
+  void calendarIndex(dateValue){
+    int dayIndex = 0;
+
+    if(dateValue != null){
+      dayIndex = dayList.indexOf(DateFormat('yyyy-MM-dd').format(dateValue));
+    }
+
+    calendarFirstDay =  DateTime.parse(dayList[0] + " 00:00:00.000");
+    calendarLastDay  =  DateTime.parse(dayList[dayList.length-1] + " 00:00:00.000");
+    dayWaterText = waterList[dayIndex].toString();
+    notifyListeners();
+  }
+
+
 }

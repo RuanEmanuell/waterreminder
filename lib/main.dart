@@ -83,6 +83,7 @@ class _MyAppState extends State<MyApp> {
     Future.delayed(const Duration(seconds: 2), () {
       if (Hive.box("box0").get("list0") == null ||
           provider.day != Hive.box("daybox").get("day")) {
+        provider.updateDatabase();
         provider.createData();
         Hive.box("languagebox").get("languagemode") != null
             ? provider.english = false
@@ -144,59 +145,61 @@ class _MyAppState extends State<MyApp> {
                     heroTag: "btn2",
                     icon: Icons.local_drink,
                     onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(content:
-                              StatefulBuilder(builder: (context, setState) {
-                            return Container(
-                              height: screenHeight / 5,
-                              width: screenWidth / 2,
-                              color: Colors.white,
-                              child: Column(
-                                children: [
-                                  Text("Meta diária de água:"),
-                                  Text("${value.goal}L"),
-                                  Slider(
-                                    min: 1,
-                                    max: 10,
-                                    divisions: 18,
-                                    value: value.goal,
-                                    onChanged: (sliderValue) {
-                                      setState((() {
-                                        value.goal = sliderValue;
-                                      }));
-                                    },
-                                  ),
-                                  InkWell(
-                                      child: Container(
-                                        height: screenHeight / 15,
-                                        width: screenWidth / 2,
-                                        decoration: BoxDecoration(
-                                          color: Colors.blue,
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            "Definir meta",
-                                            style:
-                                                TextStyle(color: Colors.white),
+                      if (value.page == 0) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(content:
+                                StatefulBuilder(builder: (context, setState) {
+                              return Container(
+                                height: screenHeight / 5,
+                                width: screenWidth / 2,
+                                color: Colors.white,
+                                child: Column(
+                                  children: [
+                                    Text("Meta diária de água:"),
+                                    Text("${value.goal}L"),
+                                    Slider(
+                                      min: 1,
+                                      max: 10,
+                                      divisions: 18,
+                                      value: value.goal,
+                                      onChanged: (sliderValue) {
+                                        setState((() {
+                                          value.goal = sliderValue;
+                                        }));
+                                      },
+                                    ),
+                                    InkWell(
+                                        child: Container(
+                                          height: screenHeight / 15,
+                                          width: screenWidth / 2,
+                                          decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              "Definir meta",
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                        value.dismissGoal(true);
-                                      }),
-                                ],
-                              ),
-                            );
-                          }));
-                        },
-                      ).then(((dialogValue) {
-                        value.dismissGoal(false);
-                      }));
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                          value.dismissGoal(true);
+                                        }),
+                                  ],
+                                ),
+                              );
+                            }));
+                          },
+                        ).then(((dialogValue) {
+                          value.dismissGoal(false);
+                        }));
+                      }
                     },
                   ),
                 ),
@@ -205,29 +208,30 @@ class _MyAppState extends State<MyApp> {
                 duration: const Duration(milliseconds: 250),
                 opacity: value.page == 0 ? 1 : 0,
                 child: MainButton(
-                  value: value,
-                  heroTag: "btn1",
-                  icon: Icons.add,
-                  onPressed: () {
-                    if (value.percentage >= 100 &&
-                        Hive.box("mensagebox").get("ok") == null) {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return WarningDialog(value: value);
-                        },
-                      );
-                    }
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return AddScreen();
-                        },
-                      ),
-                    );
-                  },
-                ),
+                    value: value,
+                    heroTag: "btn1",
+                    icon: Icons.add,
+                    onPressed: () {
+                      if (value.page == 0) {
+                        if (value.percentage >= 100 &&
+                            Hive.box("mensagebox").get("ok") == null) {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return WarningDialog(value: value);
+                            },
+                          );
+                        }
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return AddScreen();
+                            },
+                          ),
+                        );
+                      }
+                    }),
               ),
             ],
           );

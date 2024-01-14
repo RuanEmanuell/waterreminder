@@ -1,7 +1,9 @@
 import 'package:alarme/screens/add.dart';
+import 'package:alarme/screens/calendar.dart';
 import 'package:alarme/widgets/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../controller/controller.dart';
@@ -17,12 +19,11 @@ class HistoryScreen extends StatelessWidget {
     var screenWidth = MediaQuery.of(context).size.width;
     var value = Provider.of<Controller>(context, listen: false);
     return Scaffold(
+      backgroundColor: Colors.white,
         body: Center(
             child: SingleChildScrollView(
                 physics: const NeverScrollableScrollPhysics(),
                 child: Container(
-                  height: screenHeight,
-                  width: screenWidth,
                   color: value.darkMode
                       ? const Color.fromARGB(255, 29, 29, 29)
                       : Colors.white,
@@ -77,6 +78,23 @@ class HistoryScreen extends StatelessWidget {
                                         removeButtonVisible: true));
                               }),
                         ),
-                ))));
+                ))),
+                floatingActionButton: MainButton(
+                  heroTag: "btn4",
+                  value: value,
+                  icon: Icons.calendar_month,
+                  onPressed: (){
+                    value.calendarIndex(DateTime.parse(value.dayList[value.dayList.length-1]));
+                    Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return CalendarScreen();
+                            },
+                          ),
+                        );
+                  },
+                ),
+                floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,);
   }
 }

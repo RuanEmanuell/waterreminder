@@ -41,8 +41,10 @@ class Controller extends ChangeNotifier {
   late List<dynamic> list0, list1, list2, dayList, waterList;
 
   String dayWaterText = "";
+  String currentDay = "";
   late DateTime calendarFirstDay;
   late DateTime calendarLastDay;
+  double waterBottleSize = 0.0;
 
   var cups = [
     ["cup", "glass", "big glass", "bottle", "jar", "big bottle"],
@@ -133,6 +135,9 @@ class Controller extends ChangeNotifier {
     increasePercentage();
     updateDatabase();
     notifyListeners();
+
+    print(waterList);
+    print(dayList);
   }
 
   //This is the opposite, removing the cups, and does the same thing with the wave, but in reverse
@@ -144,6 +149,11 @@ class Controller extends ChangeNotifier {
     takeHour();
     increasePercentage();
     updateDatabase();
+
+    if(percentage < 0){
+      percentage = 0;
+    }
+
     notifyListeners();
   }
 
@@ -265,7 +275,9 @@ class Controller extends ChangeNotifier {
 
     calendarFirstDay =  DateTime.parse(dayList[0] + " 00:00:00.000");
     calendarLastDay  =  DateTime.parse(dayList[dayList.length-1] + " 00:00:00.000");
-    dayWaterText = waterList[dayIndex].toString();
+    dayWaterText = (waterList[dayIndex]/1000).toString();
+    currentDay = DateFormat('dd/MM/yyyy').format(dateValue);
+    waterBottleSize = (double.parse(dayWaterText) / goal * 100);
     notifyListeners();
   }
 

@@ -1,3 +1,4 @@
+import 'package:alarme/models/languages.dart';
 import 'package:alarme/screens/add.dart';
 import 'package:alarme/widgets/dialog.dart';
 import 'package:flutter/material.dart';
@@ -67,37 +68,35 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   var controller = PageController(initialPage: 0);
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
 
     var provider = Provider.of<Controller>(context, listen: false);
 
-    // Hive (persistent data) management
-
-    provider.openBox();
-
-    Future.delayed(const Duration(seconds: 2), () {
-      if (Hive.box("box0").get("list0") == null ||
-          provider.day != Hive.box("daybox").get("day")) {
-        provider.updateDatabase();
-        provider.createData();
-        Hive.box("languagebox").get("languagemode") != null
-            ? provider.english = false
-            : true;
-        Hive.box("darkmodebox").get("darkmode") != null
-            ? provider.darkMode = true
-            : false;
-      } else {
-        provider.loadData();
-        provider.defaultPercentageSize();
-      }
-
-      provider.loading = false;
+    provider.openBox().then((value) {
+      provider.openingApp();
     });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    var provider = Provider.of<Controller>(context, listen: false);
+    state = state;
+    if (state == AppLifecycleState.resumed) {
+      provider.openBox();
+      provider.openingApp();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override
@@ -149,17 +148,30 @@ class _MyAppState extends State<MyApp> {
                         showDialog(
                           context: context,
                           builder: (context) {
-                            return AlertDialog(content:
+                            return AlertDialog(
+                              contentPadding: EdgeInsets.zero,
+                              content:
                                 StatefulBuilder(builder: (context, setState) {
                               return Container(
-                                height: screenHeight / 5,
+                                height: screenHeight / 4,
                                 width: screenWidth / 2,
-                                color: Colors.white,
+                                color: value.darkMode ? Colors.blue : Colors.white,
+                                padding: EdgeInsets.all(screenWidth/30),
                                 child: Column(
                                   children: [
-                                    Text("Meta diária de água:"),
-                                    Text("${value.goal}L"),
+                                    Text(
+                                      value.english
+                                          ? english[11]
+                                          : portuguese[11], style: TextStyle(
+                                      color: value.darkMode ? Colors.white : Colors.black,
+                                          )
+                                    ),
+                                    Text("${value.goal}L", style: TextStyle(
+                                      color: value.darkMode ? Colors.white : Colors.black,
+                                    )),
                                     Slider(
+                                      inactiveColor: value.darkMode ? Colors.white : Colors.blue,
+                                      activeColor: value.darkMode ? Colors.white : Colors.blue,
                                       min: 1,
                                       max: 10,
                                       divisions: 18,
@@ -175,13 +187,15 @@ class _MyAppState extends State<MyApp> {
                                           height: screenHeight / 15,
                                           width: screenWidth / 2,
                                           decoration: BoxDecoration(
-                                            color: Colors.blue,
+                                            color: value.darkMode ? const Color.fromARGB(255, 17, 17, 17) : Colors.blue,
                                             borderRadius:
                                                 BorderRadius.circular(20),
                                           ),
                                           child: Center(
                                             child: Text(
-                                              "Definir meta",
+                                              value.english
+                                                  ? english[12]
+                                                  : portuguese[12],
                                               style: TextStyle(
                                                   color: Colors.white),
                                             ),

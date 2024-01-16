@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:intl/intl.dart'; 
-import 'package:intl/date_symbol_data_local.dart'; 
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'dart:io';
 
@@ -27,6 +27,8 @@ class Controller extends ChangeNotifier {
 
   final String defaultLocale = Platform.localeName;
 
+  bool sameDay = true;
+
   //Info variables
   String text = "";
   bool isCustom = false;
@@ -44,7 +46,8 @@ class Controller extends ChangeNotifier {
   String currentDay = "";
   late DateTime calendarFirstDay;
   late DateTime calendarLastDay;
-  double waterBottleSize = 0.0;
+  int waterBottleSize = 0;
+  Color goalPercentage = Colors.red;
 
   var cups = [
     ["cup", "glass", "big glass", "bottle", "jar", "big bottle"],
@@ -135,9 +138,6 @@ class Controller extends ChangeNotifier {
     increasePercentage();
     updateDatabase();
     notifyListeners();
-
-    print(waterList);
-    print(dayList);
   }
 
   //This is the opposite, removing the cups, and does the same thing with the wave, but in reverse
@@ -150,7 +150,7 @@ class Controller extends ChangeNotifier {
     increasePercentage();
     updateDatabase();
 
-    if(percentage < 0){
+    if (percentage < 0) {
       percentage = 0;
     }
 
@@ -178,7 +178,7 @@ class Controller extends ChangeNotifier {
   }
 
   //These are the Hive functions, this one opens the data box
-  void openBox() async {
+  Future<bool> openBox() async {
     await Hive.openBox("box0");
     await Hive.openBox("box1");
     await Hive.openBox("box2");
@@ -189,6 +189,7 @@ class Controller extends ChangeNotifier {
     await Hive.openBox("goalbox");
     await Hive.openBox("daylistbox");
     await Hive.openBox("daywaterbox");
+    return true;
   }
 
   //This create data if it's your first time opening the app
@@ -202,7 +203,7 @@ class Controller extends ChangeNotifier {
     if (Hive.box("daylistbox").get("daylist") != null) {
       dayList = Hive.box("daylistbox").get("daylist");
       waterList = Hive.box("daywaterbox").get("waterlist");
-    } 
+    }
 
     if (defaultLocale == "pt_BR" || defaultLocale == "PT_PT") {
       english = false;
@@ -266,20 +267,65 @@ class Controller extends ChangeNotifier {
     Hive.box("mensagebox").put("ok", ok);
   }
 
-  void calendarIndex(dateValue){
+  void calendarIndex(dateValue) {
     int dayIndex = 0;
 
-    if(dateValue != null){
+    if (dateValue != null) {
       dayIndex = dayList.indexOf(DateFormat('yyyy-MM-dd').format(dateValue));
     }
 
-    calendarFirstDay =  DateTime.parse(dayList[0] + " 00:00:00.000");
-    calendarLastDay  =  DateTime.parse(dayList[dayList.length-1] + " 00:00:00.000");
-    dayWaterText = (waterList[dayIndex]/1000).toString();
+    calendarFirstDay = DateTime.parse(dayList[0] + " 00:00:00.000");
+    calendarLastDay =
+        DateTime.parse(dayList[dayList.length - 1] + " 00:00:00.000");
     currentDay = DateFormat('dd/MM/yyyy').format(dateValue);
-    waterBottleSize = (double.parse(dayWaterText) / goal * 100);
+
+    if (waterList[dayIndex] == null) {
+      dayWaterText = "0.0";
+      waterBottleSize = 0;
+    } else {
+      dayWaterText = (waterList[dayIndex] / 1000).toString();
+      waterBottleSize = (double.parse(dayWaterText) / goal * 100).round();
+      if (waterBottleSize > 100) {
+        waterBottleSize = 100;
+      }
+    }
+
+    if(waterBottleSize == 100){
+      goalPercentage = Colors.green;
+    }else if(waterBottleSize > 75){
+      goalPercentage = Colors.lightGreen;
+    }else if(waterBottleSize > 50){
+      goalPercentage = Colors.yellow.shade800;
+    }else{
+      goalPercentage = Colors.red;
+    }
+
     notifyListeners();
   }
 
+  bool checkDay() {
+    day = "${DateTime.now().day}";
+    if (day != Hive.box("daybox").get("day")) {
+      sameDay = false;
+    }
+    return sameDay;
+  }
 
+  void openingApp() {
+    loading = true;
+    notifyListeners();
+      if (Hive.box("box0").get("list0") == null || checkDay() == false) {
+        updateDatabase();
+        createData();
+
+        english = Hive.box("languagebox").get("languagemode") == null;
+        darkMode = Hive.box("darkmodebox").get("darkmode") != null;
+      } else {
+        loadData();
+      }
+      defaultPercentageSize();
+
+      loading = false;
+      notifyListeners();
+    }
 }

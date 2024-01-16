@@ -19,14 +19,13 @@ class HistoryScreen extends StatelessWidget {
     var screenWidth = MediaQuery.of(context).size.width;
     var value = Provider.of<Controller>(context, listen: false);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: value.darkMode
+                      ? const Color.fromARGB(255, 29, 29, 29)
+                      : Colors.white,
         body: Center(
             child: SingleChildScrollView(
                 physics: const NeverScrollableScrollPhysics(),
                 child: Container(
-                  color: value.darkMode
-                      ? const Color.fromARGB(255, 29, 29, 29)
-                      : Colors.white,
                   child: value.list0.length == 0
                       ? Column(
                           mainAxisAlignment: MainAxisAlignment.center,

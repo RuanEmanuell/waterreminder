@@ -19,7 +19,7 @@ class AddScreen extends StatelessWidget {
     var textController = TextEditingController();
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: value.darkMode ? Colors.black : Colors.blue,
+            backgroundColor: value.darkMode ? const Color.fromARGB(255, 17, 17, 17) : Colors.blue,
             centerTitle: true,
             title: Text(value.english ? english[4] : portuguese[4])),
         body: SingleChildScrollView(

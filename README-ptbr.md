@@ -6,6 +6,8 @@ Esse projeto é um simples lembrete de tomar água, mas eu aprendi muito com ele
 mandar notificações (com Awesome Notifications). Eu também aprendi muito sobre coisas como tradução do app e modo escuro, e foi muito bom pra melhorar minhas
 habilidades com Flutter no geral. Também foi meu primeiro projeto lançado no <a href="https://play.google.com/store/apps/details?id=com.ruanemanuell.water_reminder">Google Play</a>, e eu aprendi muito sobre o processo de postar apps lá também.
 
+PS: Esse projeto começou em 2022, mas foi atualizado no inicio de 2024.
+
 ### Como rodar
 
 Você precisará de <a href="https://docs.flutter.dev/get-started/install">Flutter</a>, após inicializar em seu emulador ou dispositivo e 

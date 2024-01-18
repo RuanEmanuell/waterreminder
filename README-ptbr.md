@@ -18,7 +18,8 @@ PS: Este projeto começou em 2022, mas foi atualizado no início de 2024.
 
 Você precisará de <a href="https://docs.flutter.dev/get-started/install">Flutter</a>, após inicializar em seu emulador ou dispositivo e 
 <a href="https://docs .flutter.dev/get-started/codelab">iniciar um novo projeto do Flutter</a>, você transferirá os arquivos desse repositório
-para a pasta do seu projeto do Flutter.
+para a pasta do seu projeto do Flutter. Como o projeto começou em 2022, será necessário fazer rollback pra uma versão antiga do Flutter (v 3.13.9).
+Alguns outros ajustes também poderão ser necessários devido a incompatibilidade de alguns pacotes usados.
 
 ### Aqui estão algumas imagens do projeto rodando:
 

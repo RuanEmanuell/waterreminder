@@ -12,7 +12,6 @@ class HomeScreen extends StatelessWidget {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     var value = Provider.of<Controller>(context, listen: false);
-    bool isOn = false;
     return Scaffold(
         body: SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(),

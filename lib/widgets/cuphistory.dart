@@ -1,15 +1,17 @@
-import 'package:alarme/models/languages.dart';
+import 'package:water_reminder/controller/controller.dart';
+import 'package:water_reminder/models/languages.dart';
 import 'package:flutter/material.dart';
 
 class CupHistoryWidget extends StatelessWidget {
-  var index;
-  var value;
-  late bool removeButtonVisible;
-  late bool removeDialog;
-  CupHistoryWidget({
+  final int index;
+  final Controller value;
+  final bool removeButtonVisible;
+  final bool removeDialog;
+  const CupHistoryWidget({super.key, 
     required this.index,
     required this.value,
-    required this.removeButtonVisible,
+    required this.removeButtonVisible, 
+    required this.removeDialog,
   });
 
   @override
@@ -19,6 +21,7 @@ class CupHistoryWidget extends StatelessWidget {
     return InkWell(
       onTap: () async {
         bool remove = false;
+        if(removeDialog){
         await showDialog(
           context: context,
           builder: (context) {
@@ -45,7 +48,8 @@ class CupHistoryWidget extends StatelessWidget {
                       child: CupHistoryWidget(
                         index: index,
                         value: value,
-                        removeButtonVisible: false,
+                        removeButtonVisible: false, 
+                        removeDialog: false,
                       ),
                     ),
                     SizedBox(height: screenHeight / 20),
@@ -96,6 +100,7 @@ class CupHistoryWidget extends StatelessWidget {
             );
           },
         );
+        }
         if(remove){
         value.removeCup(index);
         }

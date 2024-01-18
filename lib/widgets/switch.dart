@@ -1,11 +1,14 @@
+// ignore_for_file: use_key_in_widget_constructors
+
+import 'package:water_reminder/controller/controller.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_switch/flutter_switch.dart';
 
 class DarkModeSwitch extends StatelessWidget {
-  var value;
-  var provider;
+  final Controller value;
+  final Controller provider;
 
-  DarkModeSwitch({required this.value, required this.provider});
+  const DarkModeSwitch({super.key, required this.value, required this.provider});
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +25,10 @@ class DarkModeSwitch extends StatelessWidget {
 }
 
 class LanguageSwitch extends StatelessWidget {
-  var value;
-  var provider;
+  final Controller value;
+  final Controller provider;
 
-  LanguageSwitch({required this.value, required this.provider});
+  const LanguageSwitch({required this.value, required this.provider});
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:alarme/controller/ad_mob_service.dart';
+import 'package:water_reminder/controller/ad_mob_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';

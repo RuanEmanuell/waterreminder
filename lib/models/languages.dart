@@ -25,7 +25,7 @@ var english = [
   "Home",
   "History",
   "Settings",
-  "It looks like you still don't have drink water today...",
+  "Looks like you haven't drunk water today...",
   "Select a cup",
   "Custom",
   "Dark Mode",

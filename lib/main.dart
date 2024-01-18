@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:alarme/models/languages.dart';
-import 'package:alarme/screens/add.dart';
-import 'package:alarme/widgets/dialog.dart';
+import 'package:water_reminder/models/languages.dart';
+import 'package:water_reminder/screens/add.dart';
+import 'package:water_reminder/widgets/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -35,7 +35,7 @@ void main() async {
       ledColor: const Color.fromARGB(255, 59, 193, 255),
       playSound: true,
       enableLights: false,
-      enableVibration: true,
+      enableVibration: true
     ),
   ]);
 

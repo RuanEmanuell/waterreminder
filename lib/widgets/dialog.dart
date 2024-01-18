@@ -1,12 +1,13 @@
+import 'package:water_reminder/controller/controller.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
 
 import '../models/languages.dart';
 
 class WarningDialog extends StatelessWidget {
-  var value;
+  final Controller value;
 
-  WarningDialog({required this.value});
+  const WarningDialog({super.key, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +29,10 @@ class WarningDialog extends StatelessWidget {
 }
 
 class CustomDialog extends StatelessWidget {
-  var textController;
-  var value;
+  final TextEditingController textController;
+  final Controller value;
 
-  CustomDialog({required this.textController, required this.value});
+  const CustomDialog({super.key, required this.textController, required this.value});
 
   @override
   Widget build(BuildContext context) {

@@ -1,12 +1,13 @@
+import '../controller/controller.dart';
 import "package:flutter/material.dart";
 
 class CupAddWidget extends StatelessWidget {
-  late String cup;
-  late String size;
-  var onTap;
-  var value;
+  final String cup;
+  final String size;
+  final void Function() onTap;
+  final Controller value;
 
-  CupAddWidget({required this.cup, required this.size, required this.onTap, required this.value});
+  const CupAddWidget({super.key, required this.cup, required this.size, required this.onTap, required this.value});
 
   @override
   Widget build(BuildContext context) {

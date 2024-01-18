@@ -1,16 +1,14 @@
+import "package:water_reminder/controller/controller.dart";
 import "package:flutter/material.dart";
-import 'package:hive_flutter/hive_flutter.dart';
 
-import "../screens/add.dart";
-import "dialog.dart";
 
 class MainButton extends StatelessWidget {
-  var value;
-  var heroTag;
-  var icon;
-  var onPressed;
+  final Controller value;
+  final String heroTag;
+  final IconData icon;
+  final void Function() onPressed;
 
-  MainButton({required this.value, required this.heroTag, required this.icon, required this.onPressed});
+  const MainButton({super.key, required this.value, required this.heroTag, required this.icon, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {

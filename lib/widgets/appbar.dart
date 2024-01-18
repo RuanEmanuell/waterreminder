@@ -6,9 +6,9 @@ import "../controller/controller.dart";
 import "../models/languages.dart";
 
 class CustomAppBar extends StatelessWidget {
-  var controller;
+  final dynamic controller;
 
-  CustomAppBar({this.controller});
+  const CustomAppBar({super.key, this.controller});
 
   @override
   Widget build(BuildContext context) {

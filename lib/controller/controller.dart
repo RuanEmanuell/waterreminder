@@ -1,32 +1,28 @@
-import 'package:alarme/controller/ad_mob_service.dart';
 import "package:flutter/material.dart";
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
-import "ad_mob_service.dart";
 
 import 'dart:io';
 
 class Controller extends ChangeNotifier {
   //Args for the screens
-  var index;
-  var key;
-  var value;
+  late int index;
+  late String key;
+  late Controller value;
 
   //Loading controller
   bool loading = true;
 
   //Visual variables
-  var white = Colors.white;
+  Color white = Colors.white;
   bool darkMode = false;
   bool english = true;
-  var page = 0;
-  var grey = const Color.fromARGB(255, 102, 102, 102);
+  int page = 0;
+  Color grey = const Color.fromARGB(255, 102, 102, 102);
 
-  var button1Color = Colors.white;
-  var button2Color = const Color.fromARGB(255, 102, 102, 102);
-  var button3Color = const Color.fromARGB(255, 102, 102, 102);
+  Color button1Color = Colors.white;
+  Color button2Color = const Color.fromARGB(255, 102, 102, 102);
+  Color button3Color = const Color.fromARGB(255, 102, 102, 102);
 
   final String defaultLocale = Platform.localeName;
 
@@ -129,7 +125,7 @@ class Controller extends ChangeNotifier {
     } else if (hour < 10) {
       list2.add("0$hour:$minute $timeIndicator");
     } else {
-      list2.add("$hour:$minute  $timeIndicator");
+      list2.add("$hour:$minute $timeIndicator");
     }
   }
 

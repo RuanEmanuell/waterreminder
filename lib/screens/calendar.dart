@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import "../controller/controller.dart";
 
 import "../models/languages.dart";
 
-import '../widgets/cupadd.dart';
-import "../widgets/dialog.dart";
 
 class CalendarScreen extends StatelessWidget {
+  const CalendarScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -34,12 +33,12 @@ class CalendarScreen extends StatelessWidget {
                       child: Theme(
                         data: Theme.of(context).copyWith(
                             colorScheme: value.darkMode
-                                ? ColorScheme.dark(
+                                ? const ColorScheme.dark(
                                     onPrimary: Colors.black,
                                     onSurface: Colors.white,
                                     primary: Colors.white,
                                   )
-                                : ColorScheme.dark(
+                                : const ColorScheme.dark(
                                     onPrimary: Colors.white,
                                     onSurface: Colors.black,
                                     primary: Colors.blue,
@@ -60,7 +59,7 @@ class CalendarScreen extends StatelessWidget {
                         height: screenHeight/2,
                         decoration: BoxDecoration(
                             color: value.darkMode
-                                ? Color.fromARGB(255, 17, 17, 17)
+                                ? const Color.fromARGB(255, 17, 17, 17)
                                 : Colors.blue,
                             borderRadius: BorderRadius.circular(10)),
                         child: Column(
@@ -119,7 +118,7 @@ class CalendarScreen extends StatelessWidget {
                                                   183.25,
                                               curve: Curves.easeInOut,
                                               duration:
-                                                  Duration(milliseconds: 500),
+                                                  const Duration(milliseconds: 500),
                                               height: screenHeight / 20,
                                               decoration: BoxDecoration(
                                                   color: Colors.blue,

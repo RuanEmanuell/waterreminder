@@ -1,4 +1,4 @@
-import 'package:alarme/controller/ad_mob_service.dart';
+import 'package:water_reminder/controller/ad_mob_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
@@ -25,8 +25,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void createBannerAd() {
     banner = BannerAd(
         size: AdSize.fullBanner,
-        adUnitId: AdMobService.bannerUnitId!,
-        listener: AdMobService.bannerAdListener,
+        adUnitId: AdMobService.settingsBannerUnitId!,
+        listener: AdMobService.settingsBannerAdListener,
         request: const AdRequest())
       ..load();
   }
@@ -79,7 +79,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               banner == null
                   ? Container()
                   : Container(
-                      height: screenHeight / 20,
+                  width: screenWidth,
+                  height: AdSize.fullBanner.height.toDouble(),
                       margin: EdgeInsets.all(screenWidth / 5),
                       child: AdWidget(ad: banner!)),
               Expanded(

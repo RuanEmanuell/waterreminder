@@ -4,6 +4,8 @@
 
 This project is a simple Water Reminder, but I learned a lot from it. In this project I learned to manage persistant data (with Hive), send app notifications (with Awesome Notifications), I also learned a lot about other things (such as in-app translation and dark mode) and it was great to increase my Flutter skills overall. It is also my first app to be available on <a href="https://play.google.com/store/apps/details?id=com.ruanemanuell.water_reminder">Google Play</a>, and this was great to learn about this process too.
 
+PS: This project started in 2022, but was updated in early 2024.
+
 ### How to Run
 
 You will need <a href="https://docs.flutter.dev/get-started/install">Flutter</a>, after booting up on your emulator or device and <a href="https://docs.flutter.dev/get-started/codelab">starting a new Flutter project</a>, you will transfer the files of this repository folder of your Flutter project. 

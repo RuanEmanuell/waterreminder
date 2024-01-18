@@ -15,6 +15,10 @@ var portuguese = [
   "Total de água no dia:",
   "Meta atual de água:",
   "% da meta concluída",
+  "por Ruan Emanuell",
+  "Deseja remover esse copo?",
+  "Sim",
+  "Não"
 ];
 
 var english = [
@@ -33,5 +37,9 @@ var english = [
   "Define goal",
   "Total water for the day:",
   "Current water goal:",
-  "% of goal completed"
+  "% of goal completed",
+  "by Ruan Emanuell",
+  "Remove from history?",
+  "Yes",
+  "No"
 ];

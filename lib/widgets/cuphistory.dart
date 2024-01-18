@@ -1,3 +1,4 @@
+import 'package:alarme/models/languages.dart';
 import 'package:flutter/material.dart';
 
 class CupHistoryWidget extends StatelessWidget {
@@ -22,11 +23,19 @@ class CupHistoryWidget extends StatelessWidget {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Center(
-                child: Text("Deseja remover esse copo?"),
+              titlePadding: EdgeInsets.zero,
+              contentPadding: EdgeInsets.zero,
+              title: Container(
+                color: value.darkMode? const Color.fromARGB(255, 17, 17, 17) : Colors.white,
+                padding: EdgeInsets.all(20),
+                child: Center(
+                  child: Text(value.english ? english[17] : portuguese[17], style: TextStyle(color: value.darkMode? Colors.white:Colors.black),),
+                ),
               ),
               content: Container(
-                height: screenHeight / 4,
+                color: value.darkMode? const Color.fromARGB(255, 17, 17, 17) : Colors.white,
+                padding: EdgeInsets.all(20),
+                height: screenHeight / 3.5,
                 child: Column(
                   children: [
                     Container(
@@ -52,8 +61,7 @@ class CupHistoryWidget extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Center(
-                              child: Text(
-                                "Sim",
+                              child: Text(value.english ? english[18] : portuguese[18],
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
@@ -63,7 +71,7 @@ class CupHistoryWidget extends StatelessWidget {
                             remove = true;
                           },
                         ),
-                        SizedBox(width: screenWidth / 20),
+                        SizedBox(width: screenWidth / 25),
                         InkWell(
                           child: Container(
                             height: screenHeight / 15,
@@ -73,8 +81,7 @@ class CupHistoryWidget extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Center(
-                              child: Text(
-                                "Não",
+                              child: Text(value.english ? english[19] : portuguese[19],
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),

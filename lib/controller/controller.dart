@@ -1,7 +1,10 @@
+import 'package:alarme/controller/ad_mob_service.dart';
 import "package:flutter/material.dart";
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import "ad_mob_service.dart";
 
 import 'dart:io';
 
@@ -105,12 +108,28 @@ class Controller extends ChangeNotifier {
   void takeHour() {
     var hour = DateTime.now().hour;
     var minute = DateTime.now().minute;
-    if (minute < 10) {
-      list2.add("$hour:0$minute");
+    String timeIndicator = "";
+
+    if(english){
+      timeIndicator = "AM";
+      if(hour > 12){
+        hour = hour - 12;
+        timeIndicator = "PM";
+      }else if(hour == 0){
+        hour = 12;
+      }else{
+        hour = hour;
+      }
+    }
+
+    if(minute < 10 && hour < 10){
+      list2.add("0$hour:0$minute $timeIndicator");
+    }else if (minute < 10) {
+      list2.add("$hour:0$minute $timeIndicator");
     } else if (hour < 10) {
-      list2.add("0$hour:$minute");
+      list2.add("0$hour:$minute $timeIndicator");
     } else {
-      list2.add("$hour:$minute");
+      list2.add("$hour:$minute  $timeIndicator");
     }
   }
 
@@ -274,10 +293,19 @@ class Controller extends ChangeNotifier {
       dayIndex = dayList.indexOf(DateFormat('yyyy-MM-dd').format(dateValue));
     }
 
+    DateFormat englishVisualFormatter;
+
+    if (english) {
+      englishVisualFormatter = DateFormat('MM/dd/yyyy');
+    } else {
+      englishVisualFormatter = DateFormat('dd/MM/yyyy');
+    }
+
+
     calendarFirstDay = DateTime.parse(dayList[0] + " 00:00:00.000");
     calendarLastDay =
         DateTime.parse(dayList[dayList.length - 1] + " 00:00:00.000");
-    currentDay = DateFormat('dd/MM/yyyy').format(dateValue);
+    currentDay = englishVisualFormatter.format(dateValue);
 
     if (waterList[dayIndex] == null) {
       dayWaterText = "0.0";
@@ -290,13 +318,13 @@ class Controller extends ChangeNotifier {
       }
     }
 
-    if(waterBottleSize == 100){
+    if (waterBottleSize == 100) {
       goalPercentage = Colors.green;
-    }else if(waterBottleSize > 75){
+    } else if (waterBottleSize > 75) {
       goalPercentage = Colors.lightGreen;
-    }else if(waterBottleSize > 50){
+    } else if (waterBottleSize > 50) {
       goalPercentage = Colors.yellow.shade800;
-    }else{
+    } else {
       goalPercentage = Colors.red;
     }
 
@@ -314,18 +342,18 @@ class Controller extends ChangeNotifier {
   void openingApp() {
     loading = true;
     notifyListeners();
-      if (Hive.box("box0").get("list0") == null || checkDay() == false) {
-        updateDatabase();
-        createData();
+    if (Hive.box("box0").get("list0") == null || checkDay() == false) {
+      updateDatabase();
+      createData();
 
-        english = Hive.box("languagebox").get("languagemode") == null;
-        darkMode = Hive.box("darkmodebox").get("darkmode") != null;
-      } else {
-        loadData();
-      }
-      defaultPercentageSize();
-
-      loading = false;
-      notifyListeners();
+      english = Hive.box("languagebox").get("languagemode") == null;
+      darkMode = Hive.box("darkmodebox").get("darkmode") != null;
+    } else {
+      loadData();
     }
+    defaultPercentageSize();
+
+    loading = false;
+    notifyListeners();
+  }
 }

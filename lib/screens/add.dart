@@ -1,4 +1,8 @@
+import 'dart:math';
+
+import 'package:alarme/controller/ad_mob_service.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import "../controller/controller.dart";
@@ -8,7 +12,46 @@ import "../models/languages.dart";
 import '../widgets/cupadd.dart';
 import "../widgets/dialog.dart";
 
-class AddScreen extends StatelessWidget {
+class AddScreen extends StatefulWidget {
+  @override
+  State<AddScreen> createState() => _AddScreenState();
+}
+
+class _AddScreenState extends State<AddScreen> {
+  @override
+  void initState() {
+    super.initState();
+    createInterstitialAd();
+  }
+
+  InterstitialAd? interstitialAd;
+
+  int adChance = Random().nextInt(2);
+
+  void createInterstitialAd() {
+    InterstitialAd.load(
+        adUnitId: AdMobService.interstitialAdUnitId!,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+            onAdLoaded: (ad) => interstitialAd = ad,
+            onAdFailedToLoad: (error) => interstitialAd = null));
+  }
+
+  void showInterstitialAd() {
+    if (interstitialAd != null) {
+      interstitialAd!.fullScreenContentCallback =
+          FullScreenContentCallback(onAdDismissedFullScreenContent: (ad) {
+        ad.dispose();
+        createInterstitialAd();
+      }, onAdFailedToShowFullScreenContent: (ad, error) {
+        ad.dispose();
+        createInterstitialAd();
+      });
+      interstitialAd!.show();
+      interstitialAd = null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -19,7 +62,9 @@ class AddScreen extends StatelessWidget {
     var textController = TextEditingController();
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: value.darkMode ? const Color.fromARGB(255, 17, 17, 17) : Colors.blue,
+            backgroundColor: value.darkMode
+                ? const Color.fromARGB(255, 17, 17, 17)
+                : Colors.blue,
             centerTitle: true,
             title: Text(value.english ? english[4] : portuguese[4])),
         body: SingleChildScrollView(
@@ -33,7 +78,8 @@ class AddScreen extends StatelessWidget {
                 height: screenHeight / 2,
                 child: GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3),
                   itemCount: value.cups[0].length,
                   itemBuilder: (context, index) {
                     return CupAddWidget(
@@ -45,6 +91,9 @@ class AddScreen extends StatelessWidget {
                           value.isCustom = false;
                           value.addCup();
                           Navigator.pop(context);
+                          if (adChance == 0) {
+                            showInterstitialAd();
+                          }
                         });
                   },
                 ),
@@ -54,9 +103,14 @@ class AddScreen extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return CustomDialog(textController: textController, value: value);
+                      return CustomDialog(
+                          textController: textController, value: value);
                     },
-                  );
+                  ).then((value) {
+                    if (adChance == 0) {
+                      showInterstitialAd();
+                    }
+                  });
                 },
                 child: SizedBox(
                   height: screenHeight / 2,
@@ -68,7 +122,9 @@ class AddScreen extends StatelessWidget {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: screenWidth / 20,
-                            color: value.darkMode ? Colors.white : const Color.fromARGB(255, 94, 94, 94),
+                            color: value.darkMode
+                                ? Colors.white
+                                : const Color.fromARGB(255, 94, 94, 94),
                           ))
                     ],
                   ),

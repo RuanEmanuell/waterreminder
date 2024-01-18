@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:alarme/models/languages.dart';
 import 'package:alarme/screens/add.dart';
 import 'package:alarme/widgets/dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -57,6 +61,8 @@ void main() async {
     ),
   );
 
+  unawaited(MobileAds.instance.initialize());
+
   runApp(MultiProvider(
     providers: [ChangeNotifierProvider(create: (context) => Controller())],
     child: MaterialApp(home: MyApp()),
@@ -81,6 +87,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     provider.openBox().then((value) {
       provider.openingApp();
     });
+      SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp
+  ]);
   }
 
   @override
@@ -156,9 +165,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                                 height: screenHeight / 4,
                                 width: screenWidth / 2,
                                 color: value.darkMode ? Colors.blue : Colors.white,
-                                padding: EdgeInsets.all(screenWidth/30),
                                 child: Column(
                                   children: [
+                                    SizedBox(height: screenHeight/35),
                                     Text(
                                       value.english
                                           ? english[11]

@@ -26,7 +26,7 @@ class HistoryScreen extends StatelessWidget {
             child: SingleChildScrollView(
                 physics: const NeverScrollableScrollPhysics(),
                 child: Container(
-                  child: value.list0.length == 0
+                  child: value.list0.isEmpty
                       ? Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

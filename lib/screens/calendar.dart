@@ -30,6 +30,7 @@ class CalendarScreen extends StatelessWidget {
                   width: screenWidth,
                   child: Column(children: [
                     Container(
+                      color: value.darkMode ? Colors.blue : Colors.white,
                       child: Theme(
                         data: Theme.of(context).copyWith(
                             colorScheme: value.darkMode
@@ -56,15 +57,15 @@ class CalendarScreen extends StatelessWidget {
                     ),
                     Container(
                         width: screenWidth,
-                        height: screenHeight / 2.5,
+                        height: screenHeight/2,
                         decoration: BoxDecoration(
                             color: value.darkMode
-                                ? const Color.fromARGB(255, 17, 17, 17)
+                                ? Color.fromARGB(255, 17, 17, 17)
                                 : Colors.blue,
                             borderRadius: BorderRadius.circular(10)),
                         child: Column(
                           children: [
-                            SizedBox(height: screenHeight / 40),
+                            SizedBox(height: screenHeight / 35),
                             Text(value.currentDay,
                                 style: TextStyle(
                                     color: Colors.white,

@@ -6,7 +6,13 @@ Esse projeto é um simples lembrete de tomar água, mas eu aprendi muito com ele
 mandar notificações (com Awesome Notifications). Eu também aprendi muito sobre coisas como tradução do app e modo escuro, e foi muito bom pra melhorar minhas
 habilidades com Flutter no geral. Também foi meu primeiro projeto lançado no <a href="https://play.google.com/store/apps/details?id=com.ruanemanuell.water_reminder">Google Play</a>, e eu aprendi muito sobre o processo de postar apps lá também.
 
-PS: Esse projeto começou em 2022, mas foi atualizado no inicio de 2024.
+PS: Este projeto começou em 2022, mas foi atualizado no início de 2024.
+
+     A nova versão inclui:
+      - Remover copo do histórico diário
+      - Meta diária personalizada de consumo de água
+      - Calendário dos últimos dias
+      - Anúncios para monetização do aplicativo
 
 ### Como rodar
 
@@ -16,7 +22,10 @@ para a pasta do seu projeto do Flutter.
 
 ### Aqui estão algumas imagens do projeto rodando:
 
-![Screenshot_648](https://user-images.githubusercontent.com/113607857/201489129-6b78e164-8166-451b-8b33-691a951194c9.png)
-![Screenshot_649](https://user-images.githubusercontent.com/113607857/201489132-28f7abbc-f101-454e-8065-4ed790e67bc7.png)
-![Screenshot_650](https://user-images.githubusercontent.com/113607857/201489134-2eee1266-8d84-464d-814c-8b4f71e391ef.png)
-![Screenshot_651](https://user-images.githubusercontent.com/113607857/201489136-8b0ec283-28dd-4ad9-a4f2-306ec6cfa5ed.png)
+![1-ptbr](https://github.com/RuanEmanuell/waterreminder/assets/113607857/fd792238-6260-430d-a7a7-ce61cd488ca5)
+![2-ptbr](https://github.com/RuanEmanuell/waterreminder/assets/113607857/28605616-4741-4c65-afa3-92169c38da7a)
+![3-ptbr](https://github.com/RuanEmanuell/waterreminder/assets/113607857/744cc0ba-590f-4a63-a895-0498dd820972)
+![4-ptbr](https://github.com/RuanEmanuell/waterreminder/assets/113607857/04c90e16-125a-4931-bb9d-cdcaffe3242b)
+![5-ptbr](https://github.com/RuanEmanuell/waterreminder/assets/113607857/93c19cb5-25af-4faf-8d45-57d883c3204a)
+![6-ptbr](https://github.com/RuanEmanuell/waterreminder/assets/113607857/7784644d-f3a6-46ea-ab18-6aa230fa7004)
+

@@ -14,7 +14,8 @@ PS: This project first started in 2022, but was updated in early 2024.
     
 ### How to Run
 
-You will need <a href="https://docs.flutter.dev/get-started/install">Flutter</a>, after booting up on your emulator or device and <a href="https://docs.flutter.dev/get-started/codelab">starting a new Flutter project</a>, you will transfer the files of this repository folder of your Flutter project. 
+You will need <a href="https://docs.flutter.dev/get-started/install">Flutter</a>, after booting up on your emulator or device and <a href="https://docs.flutter.dev/get-started/codelab">starting a new Flutter project</a>, you will transfer the files of this repository folder of your Flutter project. As the project started in 2022, it will be necessary to roll back to an 
+older version of Flutter (v 3.13.9). Some other adjustments may also be necessary due to incompatibility.
 
 ### Here are some images of the project running:
 

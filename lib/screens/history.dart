@@ -1,4 +1,3 @@
-import 'package:water_reminder/controller/ad_mob_service.dart';
 import 'package:water_reminder/screens/add.dart';
 import 'package:water_reminder/screens/calendar.dart';
 import 'package:water_reminder/widgets/dialog.dart';
@@ -24,18 +23,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   void initState() {
     super.initState();
-    createBannerAd();
-  }
-
-  BannerAd? banner;
-
-  void createBannerAd() {
-    banner = BannerAd(
-        size: AdSize.fullBanner,
-        adUnitId: AdMobService.historyBannerUnitId!,
-        listener: AdMobService.historyBannerAdListener,
-        request: const AdRequest())
-      ..load();
+    var provider = Provider.of<Controller>(context, listen: false);
+    provider.createBannerAd();
   }
 
   @override
@@ -65,6 +54,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             heroTag: "btn3",
                             icon: Icons.add,
                             onPressed: () {
+                              value.createBannerAd();
                               if (value.percentage >= 100 &&
                                   Hive.box("mensagebox").get("ok") == null) {
                                 showDialog(
@@ -81,31 +71,42 @@ class _HistoryScreenState extends State<HistoryScreen> {
                               ));
                             },
                           ),
-                          banner == null
+                          value.banner == null
                               ? Container()
                               : Container(
                                   width: screenWidth,
                                   height: AdSize.fullBanner.height.toDouble(),
                                   margin: EdgeInsets.all(screenWidth / 5),
-                                  child: AdWidget(ad: banner!)),
+                                  child: AdWidget(ad: value.banner!)),
                         ],
                       )
                     : SizedBox(
                         height: screenHeight / 1.12,
                         child: ListView.builder(
-                            itemCount: value.list0.length,
+                            itemCount: value.list0.length + 1,
                             itemBuilder: (context, index) {
-                              return Container(
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              color: Colors.grey, width: 1))),
-                                  alignment: Alignment.center,
-                                  child: CupHistoryWidget(
-                                      index: index,
-                                      value: value,
-                                      removeButtonVisible: true,
-                                      removeDialog: true));
+                              return index < value.list0.length
+                                  ? Container(
+                                      decoration: BoxDecoration(
+                                          border: Border(
+                                              bottom: BorderSide(
+                                                  color: Colors.grey,
+                                                  width: 1))),
+                                      alignment: Alignment.center,
+                                      child: CupHistoryWidget(
+                                          index: index,
+                                          value: value,
+                                          removeButtonVisible: true,
+                                          removeDialog: true))
+                                  : value.banner == null
+                                      ? Container()
+                                      : Container(
+                                          width: screenWidth,
+                                          height: AdSize.fullBanner.height
+                                              .toDouble(),
+                                          margin:
+                                              EdgeInsets.all(screenWidth / 5),
+                                          child: AdWidget(ad: value.banner!));
                             }),
                       ),
               ))),

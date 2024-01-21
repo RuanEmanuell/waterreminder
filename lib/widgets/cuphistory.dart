@@ -103,6 +103,7 @@ class CupHistoryWidget extends StatelessWidget {
         }
         if(remove){
         value.removeCup(index);
+        value.createBannerAd();
         }
       },
       child: Container(

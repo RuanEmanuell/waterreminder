@@ -6,7 +6,18 @@ import "package:wave/wave.dart";
 import '../controller/controller.dart';
 import '../widgets/switch.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState(){
+    super.initState();
+    var provider = Provider.of<Controller>(context, listen: false);
+    provider.createInterstitialAd();
+  }
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -16,14 +27,19 @@ class HomeScreen extends StatelessWidget {
         body: SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(),
             child: Container(
-              color: value.darkMode ? const Color.fromARGB(255, 29, 29, 29) : Colors.white,
+              color: value.darkMode
+                  ? const Color.fromARGB(255, 29, 29, 29)
+                  : Colors.white,
               child: Column(
                 children: [
                   Stack(children: [
                     WaveWidget(
                       size: Size(screenWidth, screenHeight),
                       config: CustomConfig(gradients: [
-                        [const Color.fromARGB(255, 10, 110, 192), Colors.lightBlue],
+                        [
+                          const Color.fromARGB(255, 10, 110, 192),
+                          Colors.lightBlue
+                        ],
                         [Colors.blue, Colors.lightBlue],
                       ], heightPercentages: [
                         value.size,
@@ -52,7 +68,9 @@ class HomeScreen extends StatelessWidget {
                       child: Container(
                           margin: const EdgeInsets.all(20),
                           child: DarkModeSwitch(
-                              value: value, provider: Provider.of<Controller>(context, listen: false))),
+                              value: value,
+                              provider: Provider.of<Controller>(context,
+                                  listen: false))),
                     )
                   ])
                 ],

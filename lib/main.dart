@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:water_reminder/models/languages.dart';
 import 'package:water_reminder/screens/add.dart';
 import 'package:water_reminder/widgets/dialog.dart';
@@ -28,15 +27,14 @@ void main() async {
   // Notifications
   await AwesomeNotifications().initialize(null, [
     NotificationChannel(
-      channelKey: 'key1',
-      channelName: 'Notification',
-      channelDescription: "Water notification",
-      defaultColor: const Color.fromARGB(255, 0, 80, 145),
-      ledColor: const Color.fromARGB(255, 59, 193, 255),
-      playSound: true,
-      enableLights: false,
-      enableVibration: true
-    ),
+        channelKey: 'key1',
+        channelName: 'Notification',
+        channelDescription: "Water notification",
+        defaultColor: const Color.fromARGB(255, 0, 80, 145),
+        ledColor: const Color.fromARGB(255, 59, 193, 255),
+        playSound: true,
+        enableLights: false,
+        enableVibration: true),
   ]);
 
   String localTimeZone =
@@ -87,9 +85,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     provider.openBox().then((value) {
       provider.openingApp();
     });
-      SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp
-  ]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   }
 
   @override
@@ -97,8 +93,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     var provider = Provider.of<Controller>(context, listen: false);
     state = state;
     if (state == AppLifecycleState.resumed) {
-      provider.openBox();
-      provider.openingApp();
+      provider.openBox().then((value) {
+        provider.openingApp();
+      });
     }
   }
 
@@ -158,66 +155,80 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                           context: context,
                           builder: (context) {
                             return AlertDialog(
-                              contentPadding: EdgeInsets.zero,
-                              content:
-                                StatefulBuilder(builder: (context, setState) {
-                              return Container(
-                                height: screenHeight / 4,
-                                width: screenWidth / 2,
-                                color: value.darkMode ? Colors.blue : Colors.white,
-                                child: Column(
-                                  children: [
-                                    SizedBox(height: screenHeight/35),
-                                    Text(
-                                      value.english
-                                          ? english[11]
-                                          : portuguese[11], style: TextStyle(
-                                      color: value.darkMode ? Colors.white : Colors.black,
-                                          )
-                                    ),
-                                    Text("${value.goal}L", style: TextStyle(
-                                      color: value.darkMode ? Colors.white : Colors.black,
-                                    )),
-                                    Slider(
-                                      inactiveColor: value.darkMode ? Colors.white : Colors.blue,
-                                      activeColor: value.darkMode ? Colors.white : Colors.blue,
-                                      min: 1,
-                                      max: 10,
-                                      divisions: 18,
-                                      value: value.goal,
-                                      onChanged: (sliderValue) {
-                                        setState((() {
-                                          value.goal = sliderValue;
-                                        }));
-                                      },
-                                    ),
-                                    InkWell(
-                                        child: Container(
-                                          height: screenHeight / 15,
-                                          width: screenWidth / 2,
-                                          decoration: BoxDecoration(
-                                            color: value.darkMode ? const Color.fromARGB(255, 17, 17, 17) : Colors.blue,
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              value.english
-                                                  ? english[12]
-                                                  : portuguese[12],
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          ),
+                                contentPadding: EdgeInsets.zero,
+                                content: StatefulBuilder(
+                                    builder: (context, setState) {
+                                  return Container(
+                                    height: screenHeight / 4,
+                                    width: screenWidth / 2,
+                                    color: value.darkMode
+                                        ? Colors.blue
+                                        : Colors.white,
+                                    child: Column(
+                                      children: [
+                                        SizedBox(height: screenHeight / 35),
+                                        Text(
+                                            value.english
+                                                ? english[11]
+                                                : portuguese[11],
+                                            style: TextStyle(
+                                              color: value.darkMode
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                            )),
+                                        Text("${value.goal}L",
+                                            style: TextStyle(
+                                              color: value.darkMode
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                            )),
+                                        Slider(
+                                          inactiveColor: value.darkMode
+                                              ? Colors.white
+                                              : Colors.blue,
+                                          activeColor: value.darkMode
+                                              ? Colors.white
+                                              : Colors.blue,
+                                          min: 1,
+                                          max: 10,
+                                          divisions: 18,
+                                          value: value.goal,
+                                          onChanged: (sliderValue) {
+                                            setState((() {
+                                              value.goal = sliderValue;
+                                            }));
+                                          },
                                         ),
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                          value.dismissGoal(true);
-                                        }),
-                                  ],
-                                ),
-                              );
-                            }));
+                                        InkWell(
+                                            child: Container(
+                                              height: screenHeight / 15,
+                                              width: screenWidth / 2,
+                                              decoration: BoxDecoration(
+                                                color: value.darkMode
+                                                    ? const Color.fromARGB(
+                                                        255, 17, 17, 17)
+                                                    : Colors.blue,
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  value.english
+                                                      ? english[12]
+                                                      : portuguese[12],
+                                                  style: const TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                              ),
+                                            ),
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              value.dismissGoal(true);
+                                            }),
+                                      ],
+                                    ),
+                                  );
+                                }));
                           },
                         ).then(((dialogValue) {
                           value.dismissGoal(false);

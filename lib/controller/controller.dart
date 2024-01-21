@@ -1,8 +1,13 @@
+import 'dart:math';
+
 import "package:flutter/material.dart";
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 
 import 'dart:io';
+
+import 'package:water_reminder/controller/ad_mob_service.dart';
 
 class Controller extends ChangeNotifier {
   //Args for the screens
@@ -37,7 +42,7 @@ class Controller extends ChangeNotifier {
   double goal = 2.0;
   bool ok = false;
 
-  String day = "${DateTime.now().day}";
+  String day = DateFormat('yyyy-MM-dd').format(DateTime.now()).toString();
 
   late List<dynamic> list0, list1, list2, dayList, waterList;
 
@@ -52,6 +57,54 @@ class Controller extends ChangeNotifier {
     ["cup", "glass", "big glass", "bottle", "jar", "big bottle"],
     ["100", "250", "400", "600", "800", "1000"]
   ];
+
+  InterstitialAd? interstitialAd;
+
+  void createInterstitialAd() {
+    InterstitialAd.load(
+        adUnitId: AdMobService.interstitialAdUnitId!,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+            onAdLoaded: (ad) => interstitialAd = ad,
+            onAdFailedToLoad: (error) => interstitialAd = null));
+  }
+
+  void showInterstitialAd() {
+    if (interstitialAd != null) {
+      interstitialAd!.fullScreenContentCallback =
+          FullScreenContentCallback(onAdDismissedFullScreenContent: (ad) {
+        ad.dispose();
+        createInterstitialAd();
+      }, onAdFailedToShowFullScreenContent: (ad, error) {
+        ad.dispose();
+        createInterstitialAd();
+      });
+      int adChance = Random().nextInt(5);
+      if (adChance == 0) {
+        interstitialAd!.show();
+        interstitialAd = null;
+      }
+    }
+  }
+
+  Future<int> checkInterstitialAd() async {
+    if (interstitialAd != null) {
+      return 0;
+    } else {
+      return 1;
+    }
+  }
+
+  BannerAd? banner;
+
+  void createBannerAd() {
+    banner = BannerAd(
+        size: AdSize.fullBanner,
+        adUnitId: AdMobService.historyBannerUnitId!,
+        listener: AdMobService.historyBannerAdListener,
+        request: const AdRequest())
+      ..load();
+  }
 
   //Dark mode controller
   changeDarkMode() {
@@ -106,21 +159,21 @@ class Controller extends ChangeNotifier {
     var minute = DateTime.now().minute;
     String timeIndicator = "";
 
-    if(english){
+    if (english) {
       timeIndicator = "AM";
-      if(hour > 12){
+      if (hour > 12) {
         hour = hour - 12;
         timeIndicator = "PM";
-      }else if(hour == 0){
+      } else if (hour == 0) {
         hour = 12;
-      }else{
+      } else {
         hour = hour;
       }
     }
 
-    if(minute < 10 && hour < 10){
+    if (minute < 10 && hour < 10) {
       list2.add("0$hour:0$minute $timeIndicator");
-    }else if (minute < 10) {
+    } else if (minute < 10) {
       list2.add("$hour:0$minute $timeIndicator");
     } else if (hour < 10) {
       list2.add("0$hour:$minute $timeIndicator");
@@ -148,6 +201,8 @@ class Controller extends ChangeNotifier {
       list0.add(cups[0][index]);
       list1.add(cups[1][index]);
     }
+
+    print(dayList);
 
     takeHour();
     increasePercentage();
@@ -215,9 +270,10 @@ class Controller extends ChangeNotifier {
     dayList = [];
     waterList = [];
 
+
     if (Hive.box("daylistbox").get("daylist") != null) {
-      dayList = Hive.box("daylistbox").get("daylist");
-      waterList = Hive.box("daywaterbox").get("waterlist");
+        dayList = Hive.box("daylistbox").get("daylist");
+        waterList = Hive.box("daywaterbox").get("waterlist");
     }
 
     if (defaultLocale == "pt_BR" || defaultLocale == "PT_PT") {
@@ -231,6 +287,7 @@ class Controller extends ChangeNotifier {
     Hive.box("goalbox").put("goal", goal);
     Hive.box("daylistbox").put("daylist", dayList);
     Hive.box("daywaterbox").put("waterlist", waterList);
+
     notifyListeners();
   }
 
@@ -242,6 +299,7 @@ class Controller extends ChangeNotifier {
     goal = Hive.box("goalbox").get("goal");
     Hive.box("darkmodebox").get("darkmode");
     Hive.box("languagebox").get("languagemode");
+    day = Hive.box("daybox").get("day");
     dayList = Hive.box("daylistbox").get("daylist");
     waterList = Hive.box("daywaterbox").get("waterlist");
 
@@ -256,9 +314,13 @@ class Controller extends ChangeNotifier {
     Hive.box("box0").put("list0", list0);
     Hive.box("box1").put("list1", list1);
     Hive.box("box2").put("list2", list2);
+    Hive.box("daybox").put("day", day);
     waterList[dayList.length - 1] = waterList[dayList.length - 1] + cupSize;
     Hive.box("daylistbox").put("daylist", dayList);
     Hive.box("daywaterbox").put("waterlist", waterList);
+
+    createBannerAd();
+    notifyListeners();
   }
 
   void changeGoal(goalValue) async {
@@ -297,7 +359,6 @@ class Controller extends ChangeNotifier {
       englishVisualFormatter = DateFormat('dd/MM/yyyy');
     }
 
-
     calendarFirstDay = DateTime.parse(dayList[0] + " 00:00:00.000");
     calendarLastDay =
         DateTime.parse(dayList[dayList.length - 1] + " 00:00:00.000");
@@ -328,9 +389,11 @@ class Controller extends ChangeNotifier {
   }
 
   bool checkDay() {
-    day = "${DateTime.now().day}";
-    if (day != Hive.box("daybox").get("day")) {
+    day = DateFormat('yyyy-MM-dd').format(DateTime.now()).toString().trim();
+    if (day != Hive.box("daybox").get("day").toString().trim()) {
       sameDay = false;
+    }else{
+      sameDay = true;
     }
     return sameDay;
   }
@@ -338,10 +401,8 @@ class Controller extends ChangeNotifier {
   void openingApp() {
     loading = true;
     notifyListeners();
-    if (Hive.box("box0").get("list0") == null || checkDay() == false) {
-      updateDatabase();
+    if (checkDay() == false) {
       createData();
-
       english = Hive.box("languagebox").get("languagemode") == null;
       darkMode = Hive.box("darkmodebox").get("darkmode") != null;
     } else {

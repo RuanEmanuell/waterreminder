@@ -19,6 +19,7 @@ var portuguese = [
   "Deseja remover esse copo?",
   "Sim",
   "Não",
+  "Formato de data Americano",
   "Relógio de 12 Horas"
 ];
 
@@ -43,5 +44,6 @@ var english = [
   "Remove from history?",
   "Yes",
   "No",
+  "MM-DD-YYYY Date",
   "12-hour clock"
 ];

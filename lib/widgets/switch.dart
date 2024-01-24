@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
 
 import 'package:water_reminder/controller/controller.dart';
 import "package:flutter/material.dart";
@@ -42,6 +42,46 @@ class LanguageSwitch extends StatelessWidget {
         value: value.english,
         onToggle: (value) {
           provider.changeLanguage();
+        });
+  }
+}
+
+class DateSwitch extends StatelessWidget {
+  final Controller value;
+  final Controller provider;
+
+  const DateSwitch({required this.value, required this.provider});
+
+  @override
+  Widget build(BuildContext context) {
+    return FlutterSwitch(
+        inactiveColor: const Color.fromARGB(255, 94, 94, 94),
+        activeColor: Colors.lightGreen,
+        activeIcon: Icon(Icons.date_range),
+        inactiveIcon: Icon(Icons.date_range),
+        value: value.usaDate,
+        onToggle: (value) {
+          provider.changeDate();
+        });
+  }
+}
+
+class HourSwitch extends StatelessWidget {
+  final Controller value;
+  final Controller provider;
+
+  const HourSwitch({required this.value, required this.provider});
+
+  @override
+  Widget build(BuildContext context) {
+    return FlutterSwitch(
+        inactiveColor: const Color.fromARGB(255, 94, 94, 94),
+        activeColor: Colors.blue,
+        activeIcon: Icon(Icons.punch_clock),
+        inactiveIcon: Icon(Icons.punch_clock),
+        value: value.usaHour,
+        onToggle: (value) {
+          provider.changeHour();
         });
   }
 }

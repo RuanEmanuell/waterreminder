@@ -18,7 +18,8 @@ var portuguese = [
   "por Ruan Emanuell",
   "Deseja remover esse copo?",
   "Sim",
-  "Não"
+  "Não",
+  "Relógio de 12 Horas"
 ];
 
 var english = [
@@ -41,5 +42,6 @@ var english = [
   "by Ruan Emanuell",
   "Remove from history?",
   "Yes",
-  "No"
+  "No",
+  "12-hour clock"
 ];

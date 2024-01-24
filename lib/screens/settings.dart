@@ -76,6 +76,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     value: value,
                     provider: Provider.of<Controller>(context, listen: false))
               ]),
+              SizedBox(height: screenHeight / 20),
+              Row(children: [
+                Expanded(
+                  child: Text('MM-DD-YYYY',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: value.darkMode
+                              ? Colors.white
+                              : const Color.fromARGB(255, 94, 94, 94))),
+                ),
+                DateSwitch(
+                    value: value,
+                    provider: Provider.of<Controller>(context, listen: false))
+              ]),
+              SizedBox(height: screenHeight / 20),
+              Row(children: [
+                Expanded(
+                  child: Text(value.english ? english[20] : portuguese[20],
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: value.darkMode
+                              ? Colors.white
+                              : const Color.fromARGB(255, 94, 94, 94))),
+                ),
+                HourSwitch(
+                    value: value,
+                    provider: Provider.of<Controller>(context, listen: false))
+              ]),
               banner == null
                   ? Container()
                   : Container(
@@ -97,7 +125,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         child: Column(
                           children: [
                             Text(
-                              "Water Reminder v2.0",
+                              "Water Reminder v2.1",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: value.darkMode

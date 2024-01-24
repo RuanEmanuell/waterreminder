@@ -24,6 +24,8 @@ class Controller extends ChangeNotifier {
   bool english = true;
   int page = 0;
   Color grey = const Color.fromARGB(255, 102, 102, 102);
+  bool usaDate = false;
+  bool usaHour = false;
 
   Color button1Color = Colors.white;
   Color button2Color = const Color.fromARGB(255, 102, 102, 102);
@@ -107,7 +109,7 @@ class Controller extends ChangeNotifier {
   }
 
   //Dark mode controller
-  changeDarkMode() {
+  void changeDarkMode() {
     darkMode = !darkMode;
     if (darkMode) {
       Hive.box("darkmodebox").put("darkmode", darkMode);
@@ -129,6 +131,35 @@ class Controller extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  //Date changer
+  void changeDate() {
+    usaDate = !usaDate;
+
+    if (usaDate) {
+      Hive.box("usadatebox").put("usadate", usaDate);
+    } else {
+      Hive.box("usadatebox").clear();
+    }
+
+    notifyListeners();
+  }
+
+  //Hour changer
+  void changeHour() {
+    usaHour = !usaHour;
+
+    if (usaDate) {
+      Hive.box("usahourbox").put("usahour", usaHour);
+    } else {
+      Hive.box("usahourbox").clear();
+    }
+
+
+    notifyListeners();
+  }
+
+
 
   //AppBar color function
   changeAppBarColor() {
@@ -159,9 +190,9 @@ class Controller extends ChangeNotifier {
     var minute = DateTime.now().minute;
     String timeIndicator = "";
 
-    if (english) {
+    if (usaHour) {
       timeIndicator = "AM";
-      if (hour > 12) {
+      if (hour >= 12) {
         hour = hour - 12;
         timeIndicator = "PM";
       } else if (hour == 0) {
@@ -192,6 +223,11 @@ class Controller extends ChangeNotifier {
   //custom cup and the text you tiped alongside with the cupSize for the wave,
   //if it's not custom it will only send the cup data and the cupSize
   void addCup() async {
+    if(checkDay() == false){
+      createData();
+      defaultPercentageSize();
+    }
+
     if (isCustom) {
       list0.add("custom");
       list1.add(text);
@@ -202,8 +238,6 @@ class Controller extends ChangeNotifier {
       list1.add(cups[1][index]);
     }
 
-    print(dayList);
-
     takeHour();
     increasePercentage();
     updateDatabase();
@@ -212,6 +246,11 @@ class Controller extends ChangeNotifier {
 
   //This is the opposite, removing the cups, and does the same thing with the wave, but in reverse
   void removeCup(index) async {
+    if(checkDay() == false){
+      createData();
+      defaultPercentageSize();
+    }
+
     cupSize = double.parse(list1[index]) * -1.0;
     list0.removeAt(index);
     list1.removeAt(index);
@@ -259,6 +298,9 @@ class Controller extends ChangeNotifier {
     await Hive.openBox("goalbox");
     await Hive.openBox("daylistbox");
     await Hive.openBox("daywaterbox");
+    await Hive.openBox("usahourbox");
+    await Hive.openBox("usadatebox");
+
     return true;
   }
 
@@ -270,14 +312,16 @@ class Controller extends ChangeNotifier {
     dayList = [];
     waterList = [];
 
-
     if (Hive.box("daylistbox").get("daylist") != null) {
         dayList = Hive.box("daylistbox").get("daylist");
         waterList = Hive.box("daywaterbox").get("waterlist");
-    }
-
-    if (defaultLocale == "pt_BR" || defaultLocale == "PT_PT") {
-      english = false;
+    }else{
+      if (defaultLocale == "pt_BR" || defaultLocale == "PT_PT") {
+        english = false;
+      }else{
+        usaHour = true;
+        usaDate = true;
+      }
     }
 
     dayList.add(DateFormat('yyyy-MM-dd').format(DateTime.now()));
@@ -287,6 +331,8 @@ class Controller extends ChangeNotifier {
     Hive.box("goalbox").put("goal", goal);
     Hive.box("daylistbox").put("daylist", dayList);
     Hive.box("daywaterbox").put("waterlist", waterList);
+    Hive.box("usadatebox").put("usadate", usaDate);
+    Hive.box("usahourbox").put("usahour", usaHour);
 
     notifyListeners();
   }
@@ -305,6 +351,8 @@ class Controller extends ChangeNotifier {
 
     Hive.box("darkmodebox").isNotEmpty ? darkMode = true : false;
     Hive.box("languagebox").isNotEmpty ? english = false : true;
+    Hive.box("usadatebox").isNotEmpty ? usaDate = true : false;
+    Hive.box("usahourbox").isNotEmpty ? usaHour = true : false;
 
     notifyListeners();
   }
@@ -353,7 +401,7 @@ class Controller extends ChangeNotifier {
 
     DateFormat englishVisualFormatter;
 
-    if (english) {
+    if (usaDate) {
       englishVisualFormatter = DateFormat('MM/dd/yyyy');
     } else {
       englishVisualFormatter = DateFormat('dd/MM/yyyy');

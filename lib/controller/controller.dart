@@ -395,6 +395,7 @@ class Controller extends ChangeNotifier {
   void calendarIndex(dateValue) {
     int dayIndex = 0;
 
+
     if (dateValue != null) {
       dayIndex = dayList.indexOf(DateFormat('yyyy-MM-dd').format(dateValue));
     }
@@ -412,7 +413,7 @@ class Controller extends ChangeNotifier {
         DateTime.parse(dayList[dayList.length - 1] + " 00:00:00.000");
     currentDay = englishVisualFormatter.format(dateValue);
 
-    if (waterList[dayIndex] == null) {
+    if (dayIndex == -1) {
       dayWaterText = "0.0";
       waterBottleSize = 0;
     } else {

@@ -81,7 +81,7 @@ class Controller extends ChangeNotifier {
         ad.dispose();
         createInterstitialAd();
       });
-      int adChance = Random().nextInt(5);
+      int adChance = Random().nextInt(3);
       if (adChance == 0) {
         interstitialAd!.show();
         interstitialAd = null;
@@ -155,11 +155,8 @@ class Controller extends ChangeNotifier {
       Hive.box("usahourbox").clear();
     }
 
-
     notifyListeners();
   }
-
-
 
   //AppBar color function
   changeAppBarColor() {
@@ -223,7 +220,7 @@ class Controller extends ChangeNotifier {
   //custom cup and the text you tiped alongside with the cupSize for the wave,
   //if it's not custom it will only send the cup data and the cupSize
   void addCup() async {
-    if(checkDay() == false){
+    if (checkDay() == false) {
       createData();
       defaultPercentageSize();
     }
@@ -246,7 +243,7 @@ class Controller extends ChangeNotifier {
 
   //This is the opposite, removing the cups, and does the same thing with the wave, but in reverse
   void removeCup(index) async {
-    if(checkDay() == false){
+    if (checkDay() == false) {
       createData();
       defaultPercentageSize();
     }
@@ -313,12 +310,12 @@ class Controller extends ChangeNotifier {
     waterList = [];
 
     if (Hive.box("daylistbox").get("daylist") != null) {
-        dayList = Hive.box("daylistbox").get("daylist");
-        waterList = Hive.box("daywaterbox").get("waterlist");
-    }else{
+      dayList = Hive.box("daylistbox").get("daylist");
+      waterList = Hive.box("daywaterbox").get("waterlist");
+    } else {
       if (defaultLocale == "pt_BR" || defaultLocale == "PT_PT") {
         english = false;
-      }else{
+      } else {
         usaHour = true;
         usaDate = true;
       }
@@ -327,6 +324,11 @@ class Controller extends ChangeNotifier {
     dayList.add(DateFormat('yyyy-MM-dd').format(DateTime.now()));
     waterList.add(0);
 
+    if (Hive.box("box0").get("list0") != null) {
+      Hive.box('box0').clear();
+      Hive.box('box1').clear();
+      Hive.box('box2').clear();
+    }
     Hive.box("daybox").put("day", day);
     Hive.box("goalbox").put("goal", goal);
     Hive.box("daylistbox").put("daylist", dayList);
@@ -339,9 +341,15 @@ class Controller extends ChangeNotifier {
 
   //This load data if already has data
   void loadData() async {
-    list0 = Hive.box("box0").get("list0");
-    list1 = Hive.box("box1").get("list1");
-    list2 = Hive.box("box2").get("list2");
+    if (Hive.box("box0").get("list0") != null) {
+      list0 = Hive.box("box0").get("list0");
+      list1 = Hive.box("box1").get("list1");
+      list2 = Hive.box("box2").get("list2");
+    } else {
+      list0 = [];
+      list1 = [];
+      list2 = [];
+    }
     goal = Hive.box("goalbox").get("goal");
     Hive.box("darkmodebox").get("darkmode");
     Hive.box("languagebox").get("languagemode");
@@ -395,7 +403,6 @@ class Controller extends ChangeNotifier {
   void calendarIndex(dateValue) {
     int dayIndex = 0;
 
-
     if (dateValue != null) {
       dayIndex = dayList.indexOf(DateFormat('yyyy-MM-dd').format(dateValue));
     }
@@ -417,10 +424,17 @@ class Controller extends ChangeNotifier {
       dayWaterText = "0.0";
       waterBottleSize = 0;
     } else {
+      if (waterList[dayIndex] < 0) {
+        waterList[dayIndex] = 0;
+      }
+
       dayWaterText = (waterList[dayIndex] / 1000).toString();
       waterBottleSize = (double.parse(dayWaterText) / goal * 100).round();
+
       if (waterBottleSize > 100) {
         waterBottleSize = 100;
+      } else if (waterBottleSize < 0) {
+        waterBottleSize = 0;
       }
     }
 
@@ -441,7 +455,7 @@ class Controller extends ChangeNotifier {
     day = DateFormat('yyyy-MM-dd').format(DateTime.now()).toString().trim();
     if (day != Hive.box("daybox").get("day").toString().trim()) {
       sameDay = false;
-    }else{
+    } else {
       sameDay = true;
     }
     return sameDay;

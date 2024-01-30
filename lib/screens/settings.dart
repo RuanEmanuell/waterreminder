@@ -79,7 +79,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SizedBox(height: screenHeight / 20),
               Row(children: [
                 Expanded(
-                  child: Text('MM-DD-YYYY',
+                  child: Text(value.english ? english[20] : portuguese[20],
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: value.darkMode
@@ -93,7 +93,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SizedBox(height: screenHeight / 20),
               Row(children: [
                 Expanded(
-                  child: Text(value.english ? english[20] : portuguese[20],
+                  child: Text(value.english ? english[21] : portuguese[21],
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: value.darkMode
@@ -125,7 +125,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         child: Column(
                           children: [
                             Text(
-                              "Water Reminder v2.1",
+                              "Water Reminder v2.2",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: value.darkMode

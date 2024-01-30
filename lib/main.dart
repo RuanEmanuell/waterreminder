@@ -95,6 +95,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed) {
       provider.openBox().then((value) {
         provider.openingApp();
+        provider.createBannerAd();
       });
     }
   }

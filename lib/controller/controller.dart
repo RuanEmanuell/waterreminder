@@ -133,28 +133,16 @@ class Controller extends ChangeNotifier {
   }
 
   //Date changer
-  void changeDate() {
+  void changeDate() async{
     usaDate = !usaDate;
-
-    if (usaDate) {
-      Hive.box("usadatebox").put("usadate", usaDate);
-    } else {
-      Hive.box("usadatebox").clear();
-    }
-
+    await Hive.box("usadatebox").put("usadate", usaDate);
     notifyListeners();
   }
 
   //Hour changer
-  void changeHour() {
+  void changeHour() async{
     usaHour = !usaHour;
-
-    if (usaDate) {
-      Hive.box("usahourbox").put("usahour", usaHour);
-    } else {
-      Hive.box("usahourbox").clear();
-    }
-
+    await Hive.box("usahourbox").put("usahour", usaHour);
     notifyListeners();
   }
 
@@ -359,8 +347,8 @@ class Controller extends ChangeNotifier {
 
     Hive.box("darkmodebox").isNotEmpty ? darkMode = true : false;
     Hive.box("languagebox").isNotEmpty ? english = false : true;
-    Hive.box("usadatebox").isNotEmpty ? usaDate = true : false;
-    Hive.box("usahourbox").isNotEmpty ? usaHour = true : false;
+    usaDate = Hive.box("usadatebox").get("usadate");
+    usaHour = Hive.box("usahourbox").get("usahour");
 
     notifyListeners();
   }
